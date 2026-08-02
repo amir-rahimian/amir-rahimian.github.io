@@ -1,0 +1,698 @@
+{
+  "site": {
+    "nameEn": "Amir Hossein Rahimian",
+    "nameFa": "امیرحسین رحیمیان",
+    "brandRoleEn": "Android Developer / UI UX Designer",
+    "brandRoleFa": "توسعه دهنده اندروید / طراح رابط کاربری",
+    "email": "amirrahimian2@gmail.com",
+    "phone": "+98 921 987 2447",
+    "resumeUrl": "https://drive.google.com/drive/folders/1rk3bnLp-Q2sAakZQo6DRWhu8ZtGcc0aM?usp=sharing",
+    "birthDate": "2001-05-15",
+    "locationEn": "Yazd, Iran",
+    "locationFa": "یزد، ایران",
+    "github": "https://github.com/amir-rahimian",
+    "linkedin": "https://www.linkedin.com/in/amirrahimian"
+  },
+  "nav": {
+    "en": [
+      {
+        "id": "home",
+        "label": "Home"
+      },
+      {
+        "id": "education",
+        "label": "Education"
+      },
+      {
+        "id": "skills",
+        "label": "Skills"
+      },
+      {
+        "id": "employment",
+        "label": "Employment"
+      },
+      {
+        "id": "projects",
+        "label": "Projects"
+      },
+      {
+        "id": "contact",
+        "label": "Contact"
+      }
+    ],
+    "fa": [
+      {
+        "id": "home",
+        "label": "خانه"
+      },
+      {
+        "id": "education",
+        "label": "تحصیلات"
+      },
+      {
+        "id": "skills",
+        "label": "مهارت ها"
+      },
+      {
+        "id": "employment",
+        "label": "سوابق کاری"
+      },
+      {
+        "id": "projects",
+        "label": "پروژه ها"
+      },
+      {
+        "id": "contact",
+        "label": "تماس"
+      }
+    ]
+  },
+  "hero": {
+    "en": {
+      "kicker": "Portfolio",
+      "role": "Android Developer, UI/UX Designer, AI Student",
+      "summary": "I design and build mobile experiences with a product mindset, mixing interface design, Android development, Flutter, and visual identity work into one practical workflow.",
+      "facts": [
+        "Based in Yazd, Iran",
+        "Focused on mobile products and interfaces",
+        "Always learning AI, IoT, and systems thinking"
+      ],
+      "buttons": {
+        "primary": "See Projects",
+        "secondary": "Hire Me"
+      },
+      "badges": [
+        "IRAN / YAZD",
+        "OPEN TO WORK",
+        "{age} Years Old"
+      ]
+    },
+    "fa": {
+      "kicker": "پورتفولیو",
+      "role": "توسعه دهنده اندروید، طراح UI/UX، دانشجوی هوش مصنوعی",
+      "summary": "من تجربه های موبایلی را با نگاه محصول طراحی و پیاده سازی می کنم؛ از رابط کاربری و هویت بصری تا توسعه اندروید و فلاتر، همه را در یک مسیر کاربردی و منسجم پیش می برم.",
+      "facts": [
+        "ساکن یزد، ایران",
+        "متمرکز بر محصولات موبایلی و رابط کاربری",
+        "در حال یادگیری مداوم هوش مصنوعی، IoT و تفکر سیستمی"
+      ],
+      "buttons": {
+        "primary": "مشاهده پروژه ها",
+        "secondary": "همکاری با من"
+      },
+      "badges": [
+        "ایران / یزد",
+        "آماده همکاری",
+        "{age} ساله"
+      ]
+    }
+  },
+  "sidebar": {
+    "en": {
+      "contactTitle": "Contact Info",
+      "softSkillsTitle": "Skills",
+      "languagesTitle": "Languages",
+      "programmingTitle": "Programming Languages",
+      "toolsTitle": "Tools",
+      "systemsTitle": "Operating Systems",
+      "languageStatsLabel": "Details",
+      "contacts": [
+        {
+          "label": "Email",
+          "value": "amirrahimian2@gmail.com",
+          "href": "mailto:amirrahimian2@gmail.com",
+          "icon": "email.png"
+        },
+        {
+          "label": "Phone",
+          "value": "+98 921 987 2447",
+          "href": "tel:+989219872447",
+          "icon": "phone.png"
+        },
+        {
+          "label": "GitHub",
+          "value": "@amir-rahimian",
+          "href": "https://github.com/amir-rahimian",
+          "icon": "github.png"
+        },
+        {
+          "label": "LinkedIn",
+          "value": "@amirrahimian",
+          "href": "https://www.linkedin.com/in/amirrahimian",
+          "icon": "linkdin.png"
+        }
+      ],
+      "softSkills": [
+        "Teamwork & Communication",
+        "Problem Solving",
+        "Project Management",
+        "Self Learning",
+        "Product Thinking"
+      ],
+      "languages": [
+        {
+          "name": "Persian",
+          "level": "Native Language",
+          "value": 100,
+          "details": []
+        },
+        {
+          "name": "English",
+          "level": "Second Language",
+          "value": 60,
+          "details": [
+            {
+              "label": "Reading",
+              "value": 60
+            },
+            {
+              "label": "Listening",
+              "value": 70
+            },
+            {
+              "label": "Speaking",
+              "value": 60
+            },
+            {
+              "label": "Writing",
+              "value": 40
+            }
+          ]
+        },
+        {
+          "name": "French",
+          "level": "Interested in Learning",
+          "value": 0,
+          "details": []
+        }
+      ]
+    },
+    "fa": {
+      "contactTitle": "اطلاعات تماس",
+      "softSkillsTitle": "مهارت های نرم",
+      "languagesTitle": "زبان ها",
+      "programmingTitle": "زبان های برنامه نویسی",
+      "toolsTitle": "ابزارها",
+      "systemsTitle": "سیستم عامل ها",
+      "languageStatsLabel": "جزئیات",
+      "contacts": [
+        {
+          "label": "ایمیل",
+          "value": "amirrahimian2@gmail.com",
+          "href": "mailto:amirrahimian2@gmail.com",
+          "icon": "email.png"
+        },
+        {
+          "label": "تلفن",
+          "value": "+98 921 987 2447",
+          "href": "tel:+989219872447",
+          "icon": "phone.png"
+        },
+        {
+          "label": "گیت هاب",
+          "value": "@amir-rahimian",
+          "href": "https://github.com/amir-rahimian",
+          "icon": "github.png"
+        },
+        {
+          "label": "لینکدین",
+          "value": "@amirrahimian",
+          "href": "https://www.linkedin.com/in/amirrahimian",
+          "icon": "linkdin.png"
+        }
+      ],
+      "softSkills": [
+        "کار تیمی و ارتباط",
+        "حل مسئله",
+        "مدیریت پروژه",
+        "یادگیری مستمر",
+        "نگاه محصول محور"
+      ],
+      "languages": [
+        {
+          "name": "فارسی",
+          "level": "زبان مادری",
+          "value": 100,
+          "details": []
+        },
+        {
+          "name": "English",
+          "level": "زبان دوم",
+          "value": 60,
+          "details": [
+            {
+              "label": "Reading",
+              "value": 60
+            },
+            {
+              "label": "Listening",
+              "value": 70
+            },
+            {
+              "label": "Speaking",
+              "value": 60
+            },
+            {
+              "label": "Writing",
+              "value": 40
+            }
+          ]
+        },
+        {
+          "name": "French",
+          "level": "علاقه مند به یادگیری",
+          "value": 0,
+          "details": []
+        }
+      ]
+    },
+    "capabilities": {
+      "programming": [
+        {
+          "name": "Java",
+          "value": 90,
+          "icon": "java.png"
+        },
+        {
+          "name": "Kotlin",
+          "value": 80,
+          "icon": "kotlin.png"
+        },
+        {
+          "name": "Dart",
+          "value": 90,
+          "icon": "dart.png"
+        },
+        {
+          "name": "C, C++",
+          "value": 80,
+          "icon": "c++.png"
+        },
+        {
+          "name": "Python",
+          "value": 50,
+          "icon": "python.png"
+        }
+      ],
+      "tools": [
+        {
+          "name": "Git",
+          "value": 95,
+          "icon": "git.png"
+        },
+        {
+          "name": "Figma",
+          "value": 95,
+          "icon": "figma.png"
+        },
+        {
+          "name": "Adobe Xd",
+          "value": 95,
+          "icon": "xd.png"
+        },
+        {
+          "name": "Photoshop",
+          "value": 75,
+          "icon": "photoshop.png"
+        },
+        {
+          "name": "Illustrator",
+          "value": 80,
+          "icon": "illustrator.png"
+        }
+      ],
+      "systems": [
+        {
+          "name": "Windows",
+          "value": 80,
+          "icon": "windows.png"
+        },
+        {
+          "name": "Linux",
+          "value": 30,
+          "icon": "linux.png"
+        }
+      ]
+    }
+  },
+  "education": {
+    "en": {
+      "kicker": "Academic Path",
+      "title": "Education",
+      "description": "A timeline of academic growth from engineering foundations to current AI studies.",
+      "items": [
+        {
+          "start": "2016 Sep",
+          "end": "2019 Jun",
+          "degree": "Mathematics and Physics",
+          "place": "Yazd/Jafari Naeimi High School",
+          "status": "Diploma",
+          "grade": "Grade: 17.87"
+        },
+        {
+          "start": "2019 Sep",
+          "end": "2024 Jun",
+          "degree": "Computer Engineering",
+          "place": "Shahid Bahonar University of Kerman",
+          "status": "Bachelor of Computer Engineering[AI]",
+          "grade": "Grade: 16.80"
+        },
+        {
+          "start": "2024 Sep",
+          "end": "2026 Jun",
+          "degree": "Artificial Intelligence",
+          "place": "Yazd University",
+          "status": "Master of Science",
+          "grade": "continueing..."
+        }
+      ]
+    },
+    "fa": {
+      "kicker": "مسیر آکادمیک",
+      "title": "تحصیلات",
+      "description": "مروری بر مسیر تحصیلی از پایه های مهندسی تا ادامه تحصیل در هوش مصنوعی.",
+      "items": [
+        {
+          "start": "۱۳۹۵ مهر",
+          "end": "۱۳۹۸ خرداد",
+          "degree": "ریاضی فیزیک",
+          "place": "یزد/دبیرستان جعفری نعیمی",
+          "status": "دیپلم",
+          "grade": "معدل:17.87"
+        },
+        {
+          "start": "۱۳۹۸ مهر",
+          "end": "۱۴۰۳ خرداد",
+          "degree": "مهندسی کامپیوتر",
+          "place": "دانشگاه باهنر کرمان",
+          "status": "لیسانس مهندسی کامپیوتر[هوش مصنوعی]",
+          "grade": "معدل:16.80"
+        },
+        {
+          "start": "۱۴۰۳ مهر",
+          "end": "۱۴۰۵ خرداد",
+          "degree": "هوش مصنوعی",
+          "place": "دانشگاه یزد",
+          "status": "کارشناسی ارشد",
+          "grade": "درحال تحصیل..."
+        }
+      ]
+    }
+  },
+  "employment": {
+    "en": {
+      "kicker": "Professional Timeline",
+      "title": "Employment History",
+      "description": "Freelance, startup, part-time, and teaching experiences shaped around design and mobile product building.",
+      "items": [
+        {
+          "date": "2015 Jul",
+          "title": "Freelancer",
+          "subtitle": "Design",
+          "lines": [
+            "Logo design, event design, and advertising graphics",
+            "Started building a visual design mindset early"
+          ]
+        },
+        {
+          "date": "2017 Jun",
+          "title": "Freelancer",
+          "subtitle": "UI UX Designer",
+          "lines": [
+            "User interface design",
+            "Mobile applications and websites"
+          ]
+        },
+        {
+          "date": "2018 Aug",
+          "title": "BordBord Startup",
+          "subtitle": "Smart Retail System / 1 Year",
+          "lines": [
+            "UI design",
+            "Game scenario writing"
+          ]
+        },
+        {
+          "date": "2019 Nov",
+          "title": "Freelancer",
+          "subtitle": "Android Developer",
+          "lines": [
+            "Java and Android Studio",
+            "Built practical mobile interfaces and flows"
+          ]
+        },
+        {
+          "date": "2020 Oct",
+          "title": "Unimoon Startup",
+          "subtitle": "Book lending and selling system / 8 Months",
+          "lines": [
+            "Ideation and UX",
+            "Product direction and interface design"
+          ]
+        },
+        {
+          "date": "2021 Aug",
+          "title": "Lumos",
+          "subtitle": "Part-time Employment",
+          "lines": [
+            "UI Designer, Android Programming, Hardware Programming",
+            "Ongoing work on smart home experiences"
+          ]
+        },
+        {
+          "date": "2023 Oct",
+          "title": "National Skills University",
+          "subtitle": "Android Instructor",
+          "lines": [
+            "Teaching Mobile Programming 1 and 2",
+            "Helping students move from basics to product thinking"
+          ]
+        }
+      ]
+    },
+    "fa": {
+      "kicker": "تایم لاین حرفه ای",
+      "title": "سوابق کاری",
+      "description": "تجربه های فریلنس، استارتاپی، استخدام پاره وقت و تدریس که حول طراحی و ساخت محصول موبایلی شکل گرفته اند.",
+      "items": [
+        {
+          "date": "۱۳۹۴ تیر",
+          "title": "فری لنسر",
+          "subtitle": "طراحی",
+          "lines": [
+            "طراحی لوگو، تبلیغاتی و مناسبتی",
+            "شروع جدی مسیر نگاه بصری و دیزاین"
+          ]
+        },
+        {
+          "date": "۱۳۹۶ خرداد",
+          "title": "فری لنسر",
+          "subtitle": "طراح UI UX",
+          "lines": [
+            "طراحی رابط کاربری",
+            "اپلیکیشن های موبایلی و وبسایت ها"
+          ]
+        },
+        {
+          "date": "۱۳۹۷ مرداد",
+          "title": "استارتاپ بُرد بُرد",
+          "subtitle": "سامانه فروشگاهی هوشمند / ۱ سال",
+          "lines": [
+            "طراحی رابط کاربری",
+            "سناریو نویسی بازی"
+          ]
+        },
+        {
+          "date": "۱۳۹۸ آبان",
+          "title": "فری لنسر",
+          "subtitle": "توسعه اندروید",
+          "lines": [
+            "جاوا و Android Studio",
+            "پیاده سازی جریان های کاربردی در موبایل"
+          ]
+        },
+        {
+          "date": "۱۳۹۹ مهر",
+          "title": "استارتاپ یونیمون",
+          "subtitle": "سامانه قرض و فروش کتاب / ۸ ماه",
+          "lines": [
+            "ایده پردازی و UX",
+            "جهت دهی محصول و طراحی رابط کاربری"
+          ]
+        },
+        {
+          "date": "۱۴۰۰ مرداد",
+          "title": "Lumos",
+          "subtitle": "استخدام پاره وقت",
+          "lines": [
+            "طراح رابط کاربری، برنامه نویسی اندروید، برنامه نویسی سخت افزار",
+            "همکاری مستمر روی تجربه خانه هوشمند"
+          ]
+        },
+        {
+          "date": "۱۴۰۲ مهر",
+          "title": "دانشگاه ملی مهارت",
+          "subtitle": "مدرس اندروید",
+          "lines": [
+            "تدریس برنامه نویسی موبایل ۱ و ۲",
+            "کمک به دانشجوها برای عبور از مبانی به نگاه محصول"
+          ]
+        }
+      ]
+    }
+  },
+  "projects": {
+    "en": {
+      "kicker": "Selected Works",
+      "title": "Projects",
+      "description": "A project timeline focused on product story, outcome, and the visual systems used to shape each experience.",
+      "items": [
+        {
+          "date": "2020 Nov",
+          "title": "دانشگاهمون ؟! / Unimoon Book Platform",
+          "role": "UI Designer, Logo Designer",
+          "summary": "During university, a startup idea was formed with friends to create a practical platform for buying, selling, lending books, and posting student ads.",
+          "image": "unimunPhoto.png"
+        },
+        {
+          "date": "2021 Aug",
+          "title": "Technosaf Light Control",
+          "role": "UI Designer, Android Developer",
+          "summary": "An industrial mobile interface built to manage lighting panels used for body-wave inspection and production control in a modern workshop setting.",
+          "image": "technoSafPhoto.png"
+        },
+        {
+          "date": "2021 Nov",
+          "title": "Lumos Smart Home",
+          "role": "UI Designer, Logo Designer, Android Developer",
+          "summary": "A smart home ecosystem with multiple UI iterations, focused on simple flows, modern controls, and continuous product updates.",
+          "image": "lumosPhoto.png"
+        },
+        {
+          "date": "2022 Oct",
+          "title": "Fabric Coloring System",
+          "role": "UI Designer, Android Developer",
+          "summary": "An industrial interface for a textile color-mixing machine, created for an on-device display with room for future advanced versions.",
+          "image": "coloringAppPhoto.png"
+        },
+        {
+          "date": "2023 Jun",
+          "title": "Smart Greenhouse",
+          "role": "UI Designer, Android Developer",
+          "summary": "A control and monitoring experience for an automated greenhouse, designed to simplify environmental management and future analytics.",
+          "image": "greenhousePhoto.png"
+        }
+      ]
+    },
+    "fa": {
+      "kicker": "کارهای منتخب",
+      "title": "پروژه ها",
+      "description": "تایم لاینی از پروژه ها با تمرکز بر داستان محصول، خروجی نهایی و سیستم بصری هر تجربه.",
+      "items": [
+        {
+          "date": "۱۳۹۹ آبان",
+          "title": "دانشگاهمون ؟! / پلتفرم خرید و فروش کتاب",
+          "role": "طراح رابط کاربری، لوگو",
+          "summary": "در دوران دانشگاه، همراه با گروهی از دوستان، ایده استارتاپی شکل گرفت و طراحی شد تا پلتفرمی کارآمد برای خرید و فروش، قرض دادن کتاب و انتشار آگهی های دانشجویی فراهم شود.",
+          "image": "unimunPhoto.png"
+        },
+        {
+          "date": "۱۴۰۰ مرداد",
+          "title": "کنترل نور تکنوصاف",
+          "role": "طراح رابط کاربری، برنامه نویس اندروید",
+          "summary": "برای مدیریت پنل های نوری مجموعه تکنوصاف، یک رابط موبایلی صنعتی طراحی و پیاده سازی شد تا تنظیمات و کنترل دستگاه به شکل ساده تری انجام شود.",
+          "image": "technoSafPhoto.png"
+        },
+        {
+          "date": "۱۴۰۰ آبان",
+          "title": "خانه هوشمند Lumos",
+          "role": "طراح رابط کاربری، طراح لوگو، برنامه نویس اندروید",
+          "summary": "یک اکوسیستم خانه هوشمند با چند مرحله بازطراحی رابط کاربری که روی سادگی، کنترل های مدرن و توسعه مستمر محصول تمرکز دارد.",
+          "image": "lumosPhoto.png"
+        },
+        {
+          "date": "۱۴۰۱ مهر",
+          "title": "سیستم رنگ سازی پارچه",
+          "role": "طراح رابط کاربری، برنامه نویس اندروید",
+          "summary": "رابط کاربری صنعتی برای دستگاه ترکیب و تولید رنگ پارچه که برای نمایشگر دستگاه طراحی شد و ظرفیت توسعه در نسخه های بعدی را دارد.",
+          "image": "coloringAppPhoto.png"
+        },
+        {
+          "date": "۱۴۰۲ خرداد",
+          "title": "گلخانه هوشمند",
+          "role": "طراح رابط کاربری، برنامه نویس اندروید",
+          "summary": "یک تجربه کنترل و پایش برای گلخانه خودکار که با هدف ساده سازی مدیریت محیط و آماده سازی برای نسخه های تحلیلی آینده طراحی شد.",
+          "image": "greenhousePhoto.png"
+        }
+      ]
+    }
+  },
+  "contact": {
+    "en": {
+      "kicker": "Open To Work",
+      "title": "Need a mobile product, interface, or design system?",
+      "description": "I am available for freelance work, product design collaborations, Android development, and focused interface redesign.",
+      "actions": [
+        {
+          "label": "Email Me",
+          "href": "mailto:amirrahimian2@gmail.com",
+          "icon": "email.png"
+        },
+        {
+          "label": "Call Me",
+          "href": "tel:+989219872447",
+          "icon": "phone.png"
+        },
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/amirrahimian",
+          "icon": "linkdin.png"
+        }
+      ],
+      "cardLabel": "Hiring Section",
+      "cardTitle": "Let's build something clean, useful, and product-focused.",
+      "cardText": "Send a short message about the project, product stage, or design need. I will get back through email.",
+      "form": {
+        "name": "Your name",
+        "email": "Email address",
+        "message": "Project brief",
+        "submit": "Send Message"
+      }
+    },
+    "fa": {
+      "kicker": "آماده همکاری",
+      "title": "برای محصول موبایل، رابط کاربری یا دیزاین سیستم دنبال همکاری هستی؟",
+      "description": "برای پروژه های فریلنس، همکاری محصول، توسعه اندروید و بازطراحی رابط کاربری آماده همکاری هستم.",
+      "actions": [
+        {
+          "label": "ارسال ایمیل",
+          "href": "mailto:amirrahimian2@gmail.com",
+          "icon": "email.png"
+        },
+        {
+          "label": "تماس تلفنی",
+          "href": "tel:+989219872447",
+          "icon": "phone.png"
+        },
+        {
+          "label": "لینکدین",
+          "href": "https://www.linkedin.com/in/amirrahimian",
+          "icon": "linkdin.png"
+        }
+      ],
+      "cardLabel": "بخش همکاری",
+      "cardTitle": "بیاییم یک محصول تمیز، کاربردی و دقیق بسازیم.",
+      "cardText": "یک پیام کوتاه درباره پروژه، مرحله محصول یا نیاز طراحی بفرست. پاسخ از طریق ایمیل ارسال می شود.",
+      "form": {
+        "name": "نام شما",
+        "email": "ایمیل",
+        "message": "توضیح کوتاه پروژه",
+        "submit": "ارسال پیام"
+      }
+    }
+  },
+  "footer": {
+    "en": "Designed and developed by Amir Hossein Rahimian.",
+    "fa": "طراحی و توسعه شده توسط امیرحسین رحیمیان."
+  }
+}

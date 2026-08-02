@@ -1,360 +1,610 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Initialize all functionality
-    initLanguage();
-    initNavigation();
-    initScrollAnimations();
-    initProjectFiltering();
-    initContactForm();
-    initSpotlight();
-    initAppleStyleEffects();
-    initHeroTyping();
-});
+document.addEventListener("DOMContentLoaded", initApp);
 
-// 0. LANGUAGE INITIALIZATION
-function initLanguage() {
-    const langBtns = document.querySelectorAll('.lang-btn');
-    
-    // 1. Check LocalStorage
-    // 2. Check Browser Language
-    // 3. Default to 'en'
-    const browserLang = navigator.language || navigator.userLanguage;
-    const isPersianBrowser = browserLang.startsWith('fa');
-    const defaultLang = isPersianBrowser ? 'fa' : 'en';
-    
-    const currentLang = localStorage.getItem('preferredLang') || defaultLang;
-    
-    setLanguage(currentLang);
+const state = {
+  data: null,
+  lang: "fa",
+  sectionObserver: null,
+};
 
-    langBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const lang = btn.getAttribute('data-lang');
-            setLanguage(lang);
-        });
+async function initApp() {
+  try {
+    const response = await fetch("assets/js/data.json");
+    if (!response.ok) {
+      throw new Error(`Failed to load data.json: ${response.status}`);
+    }
+
+    state.data = await response.json();
+
+    bindLanguageSwitcher();
+    bindSmoothScroll();
+    bindContactForm();
+    bindHeroMotion();
+
+    setLanguage(getInitialLanguage());
+  } catch (error) {
+    console.error("Portfolio initialization failed:", error);
+  }
+}
+
+function getInitialLanguage() {
+  const savedLanguage = localStorage.getItem("preferredLang");
+  if (savedLanguage === "fa" || savedLanguage === "en") {
+    return savedLanguage;
+  }
+
+  const browserLanguage = navigator.language || "en";
+  return browserLanguage.toLowerCase().startsWith("fa") ? "fa" : "en";
+}
+
+function bindLanguageSwitcher() {
+  document.querySelectorAll(".lang-btn").forEach((button) => {
+    button.addEventListener("click", () => {
+      const lang = button.dataset.lang;
+      if (lang && lang !== state.lang) {
+        setLanguage(lang);
+      }
     });
+  });
+}
+
+function bindSmoothScroll() {
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest('a[href^="#"]');
+    if (!link) {
+      return;
+    }
+
+    const targetId = link.getAttribute("href");
+    if (!targetId || targetId === "#") {
+      return;
+    }
+
+    const section = document.querySelector(targetId);
+    if (!section) {
+      return;
+    }
+
+    event.preventDefault();
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+}
+
+function bindContactForm() {
+  const form = document.getElementById("contactForm");
+  if (!form) {
+    return;
+  }
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if (!state.data) {
+      return;
+    }
+
+    const name = document.getElementById("name")?.value.trim() || "";
+    const email = document.getElementById("email")?.value.trim() || "";
+    const message = document.getElementById("message")?.value.trim() || "";
+    const subject =
+      state.lang === "fa"
+        ? `درخواست همکاری از ${name || "وب سایت"}`
+        : `Portfolio Contact from ${name || "Website"}`;
+    const body =
+      state.lang === "fa"
+        ? `نام: ${name}\nایمیل: ${email}\n\n${message}`
+        : `Name: ${name}\nEmail: ${email}\n\n${message}`;
+
+    window.location.href = `mailto:${state.data.site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+}
+
+function bindHeroMotion() {
+  const heroVisual = document.querySelector(".hero-visual");
+  const portraitFrame = document.querySelector(".portrait-frame");
+  if (!heroVisual || !portraitFrame) {
+    return;
+  }
+
+  heroVisual.addEventListener("mousemove", (event) => {
+    const bounds = heroVisual.getBoundingClientRect();
+    const relativeX = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const relativeY = (event.clientY - bounds.top) / bounds.height - 0.5;
+    const rotateY = relativeX * 8;
+    const rotateX = relativeY * -8;
+
+    portraitFrame.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+
+  heroVisual.addEventListener("mouseleave", () => {
+    portraitFrame.style.transform = "perspective(1200px) rotateX(0deg) rotateY(0deg)";
+  });
 }
 
 function setLanguage(lang) {
-    document.documentElement.lang = lang;
-    document.documentElement.dir = (lang === 'fa') ? 'rtl' : 'ltr';
-    localStorage.setItem('preferredLang', lang);
+  state.lang = lang === "en" ? "en" : "fa";
+  const direction = state.lang === "fa" ? "rtl" : "ltr";
 
-    // Update button states
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
-    });
+  document.documentElement.lang = state.lang;
+  document.documentElement.dir = direction;
+  document.body.setAttribute("dir", direction);
+  localStorage.setItem("preferredLang", state.lang);
+
+  document.querySelectorAll(".lang-btn").forEach((button) => {
+    button.classList.toggle("active", button.dataset.lang === state.lang);
+  });
+
+  renderPage();
 }
 
-// 1. DYNAMIC SPOTLIGHT FUNCTION (Safe for all pages)
-function initSpotlight() {
-    // Check if spotlight exists on this page
-    const sTitle = document.getElementById('spotlight-title');
-    const sDesc = document.getElementById('spotlight-desc');
-    const sCat = document.getElementById('spotlight-cat');
-    const sTech = document.getElementById('spotlight-tech');
-    const sImg = document.getElementById('spotlight-img');
-    const sLink = document.getElementById('spotlight-link');
-    const pFill = document.querySelector('.progress-fill');
+function renderPage() {
+  renderMeta();
+  renderBrand();
+  renderNavigation();
+  renderHero();
+  renderSidebar();
+  renderEducation();
+  renderEmployment();
+  renderProjects();
+  renderContact();
+  renderFooter();
+  renderPersonSchema();
+  initSectionObserver();
+}
 
-    // If elements don't exist (e.g., on games.html), stop immediately
-    if (!sTitle || !sImg) return;
+function renderMeta() {
+  const site = state.data.site;
+  const hero = state.data.hero[state.lang];
+  const pageTitle = state.lang === "fa" ? site.nameFa : site.nameEn;
+  const pageDescription = hero.summary;
+  const pageKeywords =
+    state.lang === "fa"
+      ? "امیر رحیمیان, پورتفولیو, توسعه دهنده اندروید, طراح رابط کاربری, یزد"
+      : "Amir Rahimian, Portfolio, Android Developer, UI UX Designer, Yazd";
 
-    // Spotlight Data
-    const spotlightProjects = [
-        {
-            title: "Spreadlink",
-            category: "Application",
-            desc: "A global social media platform connecting creators with seamless multi-network sharing.",
-            tech: "Android • Java • Firebase",
-            img: "spreadlink.png",
-            link: "spreadlink.html"
-        },
-        {
-            title: "Music Player online",
-            category: "Website",
-            desc: "Minimalist music player with clean controls and modern design.",
-            tech: "Web • Java • JS",
-            img: "music-player.png",
-            link: "web.html"
-        },
-        {
-            title: "Formula 1 Model",
-            category: "3D Design",
-            desc: "Highly detailed Formula 1 racing car model featuring authentic aerodynamics and materials.",
-            tech: "Blender • 3D Modeling • Texturing",
-            img: "car1.jpg",
-            link: "3dmodels.html"
-        },
-        {
-            title: "Netflix Clone",
-            category: "Web Development",
-            desc: "A responsive streaming UI mirroring Netflix’s browsing experience with pixel-perfect design.",
-            tech: "HTML • CSS • JavaScript",
-            img: "netflix.png",
-            link: "web.html"
-        },
-        {
-            title: "Car Racing Game",
-            category: "Game Development",
-            desc: "An engaging mobile car racing game featuring realistic physics and 3D environments.",
-            tech: "Unity • C# • Mobile",
-            img: "carimg1.png",
-            link: "games.html"
+  document.title = pageTitle;
+  setMetaContent('meta[name="description"]', pageDescription);
+  setMetaContent('meta[name="keywords"]', pageKeywords);
+  setMetaContent('meta[property="og:title"]', pageTitle);
+  setMetaContent('meta[property="og:description"]', pageDescription);
+}
+
+function renderBrand() {
+  const site = state.data.site;
+  setText("#brand-name", state.lang === "fa" ? site.nameFa : site.nameEn);
+  setText("#brand-role", state.lang === "fa" ? site.brandRoleFa : site.brandRoleEn);
+
+  const resumeLink = document.getElementById("resume-link");
+  if (resumeLink) {
+    resumeLink.href = site.resumeUrl;
+    resumeLink.textContent = state.lang === "fa" ? "دانلود رزومه" : "Download Resume";
+  }
+}
+
+function renderNavigation() {
+  const navContainer = document.getElementById("nav-links");
+  if (!navContainer) {
+    return;
+  }
+
+  const items = state.data.nav[state.lang];
+  navContainer.innerHTML = items
+    .map(
+      (item) => `
+        <a class="nav-link" href="#${item.id}" data-section="${item.id}">
+          ${item.label}
+        </a>
+      `
+    )
+    .join("");
+}
+
+function renderHero() {
+  const hero = state.data.hero[state.lang];
+  const age = calculateAge(state.data.site.birthDate);
+
+  setText("#hero-kicker", hero.kicker);
+  setHTML("#hero-title", buildHeroTitle(state.lang));
+  setText("#hero-role", hero.role);
+  setText("#hero-summary", hero.summary);
+  setContainerHTML(
+    "#hero-facts",
+    hero.facts.map((fact) => `<span class="fact-chip">${fact}</span>`).join("")
+  );
+
+  const primaryButton = document.getElementById("hero-primary-action");
+  const secondaryButton = document.getElementById("hero-secondary-action");
+  if (primaryButton) {
+    primaryButton.textContent = hero.buttons.primary;
+  }
+  if (secondaryButton) {
+    secondaryButton.textContent = hero.buttons.secondary;
+  }
+
+  setContainerHTML(
+    "#photo-badges",
+    hero.badges
+      .map((badge) => `<span class="photo-badge">${badge.replace("{age}", age)}</span>`)
+      .join("")
+  );
+}
+
+function renderSidebar() {
+  const sidebarContent = document.getElementById("sidebar-content");
+  if (!sidebarContent) {
+    return;
+  }
+
+  const sidebar = state.data.sidebar[state.lang];
+  const capabilities = state.data.sidebar.capabilities;
+
+  sidebarContent.innerHTML = `
+    <div class="sidebar-column-group">
+      <section class="sidebar-card">
+        <h3>${sidebar.contactTitle}</h3>
+        <div class="contact-list">
+          ${sidebar.contacts.map(renderContactItem).join("")}
+        </div>
+      </section>
+
+      <section class="sidebar-card">
+        <h3>${sidebar.softSkillsTitle}</h3>
+        <div class="skill-chip-list">
+          ${sidebar.softSkills
+            .map((skill) => `<span class="skill-chip">${skill}</span>`)
+            .join("")}
+        </div>
+      </section>
+
+      <section class="sidebar-card">
+        <h3>${sidebar.languagesTitle}</h3>
+        <div class="language-card">
+          ${sidebar.languages.map((language) => renderLanguageBlock(language)).join("")}
+        </div>
+      </section>
+
+      <section class="sidebar-card">
+        <h3>${sidebar.programmingTitle}</h3>
+        <div class="stack-list">
+          ${capabilities.programming.map(renderStackItem).join("")}
+        </div>
+      </section>
+
+      <section class="sidebar-card">
+        <h3>${sidebar.toolsTitle}</h3>
+        <div class="stack-list">
+          ${capabilities.tools.map(renderStackItem).join("")}
+        </div>
+      </section>
+
+      <section class="sidebar-card">
+        <h3>${sidebar.systemsTitle}</h3>
+        <div class="stack-list">
+          ${capabilities.systems.map(renderStackItem).join("")}
+        </div>
+      </section>
+    </div>
+  `;
+}
+
+function renderEducation() {
+  const section = state.data.education[state.lang];
+  const list = document.getElementById("education-list");
+  if (!list) {
+    return;
+  }
+
+  setText("#education-kicker", section.kicker);
+  setText("#education-title", section.title);
+  setText("#education-description", section.description);
+
+  list.innerHTML = section.items
+    .map(
+      (item) => `
+        <article class="education-item">
+          <div class="education-card">
+            <h3>${item.degree}</h3>
+            <p>${item.place}</p>
+          </div>
+          <div class="education-link">
+            <span>${item.start}<br>${item.end}</span>
+          </div>
+          <div class="education-card">
+            <h3>${item.status}</h3>
+            <p>${item.grade}</p>
+          </div>
+        </article>
+      `
+    )
+    .join("");
+}
+
+function renderEmployment() {
+  const section = state.data.employment[state.lang];
+  const list = document.getElementById("employment-list");
+  if (!list) {
+    return;
+  }
+
+  setText("#employment-kicker", section.kicker);
+  setText("#employment-title", section.title);
+  setText("#employment-description", section.description);
+
+  list.innerHTML = section.items
+    .map(
+      (item) => `
+        <article class="timeline-entry">
+          <div class="timeline-card">
+            <h3>${item.title}</h3>
+            <p>${item.subtitle}</p>
+            <div class="timeline-lines">
+              ${item.lines.map((line) => `<span>${line}</span>`).join("")}
+            </div>
+          </div>
+          <div class="timeline-date">${item.date}</div>
+        </article>
+      `
+    )
+    .join("");
+}
+
+function renderProjects() {
+  const section = state.data.projects[state.lang];
+  const list = document.getElementById("projects-list");
+  if (!list) {
+    return;
+  }
+
+  setText("#projects-kicker", section.kicker);
+  setText("#projects-title", section.title);
+  setText("#projects-description", section.description);
+
+  list.innerHTML = section.items
+    .map(
+      (item) => `
+        <article class="project-entry">
+          <div class="project-card">
+            <div class="project-card-media">
+              <img src="assets/img/${item.image}" alt="${item.title}">
+            </div>
+            <div class="project-card-body">
+              <h3>${item.title}</h3>
+              <span class="project-role">${item.role}</span>
+              <p>${item.summary}</p>
+            </div>
+          </div>
+          <div class="project-date">${item.date}</div>
+        </article>
+      `
+    )
+    .join("");
+}
+
+function renderContact() {
+  const section = state.data.contact[state.lang];
+
+  setText("#contact-kicker", section.kicker);
+  setText("#contact-title", section.title);
+  setText("#contact-description", section.description);
+  setContainerHTML(
+    "#contact-actions",
+    section.actions
+      .map(
+        (action) => `
+          <a class="contact-link" href="${action.href}" ${
+            action.href.startsWith("http") ? 'target="_blank" rel="noopener"' : ""
+          }>
+            <img src="assets/img/${action.icon}" alt="${action.label}">
+            <span>${action.label}</span>
+          </a>
+        `
+      )
+      .join("")
+  );
+
+  setText("#contact-card-label", section.cardLabel);
+  setText("#contact-card-title", section.cardTitle);
+  setText("#contact-card-text", section.cardText);
+  setText("#label-name", section.form.name);
+  setText("#label-email", section.form.email);
+  setText("#label-message", section.form.message);
+  setText("#submit-button", section.form.submit);
+
+  setPlaceholder("#name", section.form.name);
+  setPlaceholder("#email", section.form.email);
+  setPlaceholder("#message", section.form.message);
+}
+
+function renderFooter() {
+  setText("#footer-copy", state.data.footer[state.lang]);
+}
+
+function renderPersonSchema() {
+  const site = state.data.site;
+  const schemaScript = document.getElementById("person-schema");
+  if (!schemaScript) {
+    return;
+  }
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: state.lang === "fa" ? site.nameFa : site.nameEn,
+    email: site.email,
+    telephone: site.phone,
+    url: "https://amir-rahimian.github.io/",
+    image: "https://amir-rahimian.github.io/assets/img/face.png",
+    jobTitle: state.lang === "fa" ? site.brandRoleFa : site.brandRoleEn,
+    sameAs: [site.github, site.linkedin],
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: state.lang === "fa" ? site.locationFa : site.locationEn,
+      addressCountry: "IR",
+    },
+  };
+
+  schemaScript.textContent = JSON.stringify(schema, null, 2);
+}
+
+function initSectionObserver() {
+  if (state.sectionObserver) {
+    state.sectionObserver.disconnect();
+  }
+
+  const sections = [...document.querySelectorAll("section[id], aside[id]")];
+  const navLinks = [...document.querySelectorAll(".nav-link")];
+  if (!sections.length || !navLinks.length) {
+    return;
+  }
+
+  state.sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
         }
-    ];
 
-    let currentSpotlight = 0;
-
-    function rotateSpotlight() {
-        // Pick next project
-        const p = spotlightProjects[currentSpotlight];
-
-        // 1. Reset Animations (Fade Out)
-        sTitle.classList.remove('reveal-text');
-        sDesc.classList.remove('reveal-text');
-        sImg.classList.remove('zoom-active');
-
-        // Reset Progress Bar Animation (Force Reflow)
-        if(pFill) {
-            pFill.style.animation = 'none';
-            pFill.offsetHeight; /* Trigger reflow */
-            pFill.style.animation = 'progress 4s linear infinite';
-        }
-
-        // Trigger text reflow
-        void sTitle.offsetWidth;
-
-        // 2. Update Content
-        sTitle.textContent = p.title;
-        sDesc.textContent = p.desc;
-        sCat.textContent = p.category;
-        sTech.textContent = p.tech;
-        sImg.src = p.img;
-        if(sLink) sLink.href = p.link;
-
-        // 3. Add Animations Back (Fade In)
-        sTitle.classList.add('reveal-text');
-        sDesc.classList.add('reveal-text');
-        setTimeout(() => sImg.classList.add('zoom-active'), 50);
-
-        // 4. Increment Index
-        currentSpotlight = (currentSpotlight + 1) % spotlightProjects.length;
+        navLinks.forEach((link) => {
+          link.classList.toggle("active", link.dataset.section === entry.target.id);
+        });
+      });
+    },
+    {
+      rootMargin: "-20% 0px -60% 0px",
+      threshold: 0.2,
     }
+  );
 
-    // Start Loop
-    rotateSpotlight(); 
-    setInterval(rotateSpotlight, 4000);
+  sections.forEach((section) => state.sectionObserver.observe(section));
 }
 
-// 2. NAVIGATION
-function initNavigation() {
-    const navbar = document.getElementById('navbar');
-    const navLinks = document.querySelectorAll('.nav-link');
+function buildHeroTitle(lang) {
+  const lines =
+    lang === "fa"
+      ? [
+          { text: "من", className: "hero-title-small" },
+          { text: "امیرحسین", className: "hero-title-big" },
+          { text: "رحیمیان", className: "hero-title-medium" },
+          { text: "علی آباد", className: "hero-title-small" },
+        ]
+      : [
+          { text: "I am", className: "hero-title-small" },
+          { text: "AmirHossein", className: "hero-title-big" },
+          { text: "Rahimian", className: "hero-title-medium" },
+          { text: "Aliabad", className: "hero-title-small" },
+        ];
 
-    // Navbar background on scroll
-    if (navbar) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.style.background = 'rgba(5, 5, 5, 0.95)';
-                navbar.style.borderBottom = '1px solid #333';
-            } else {
-                navbar.style.background = 'rgba(5, 5, 5, 0.7)';
-                navbar.style.borderBottom = '1px solid transparent';
-            }
-        });
-    }
-
-    // Active link highlighting
-    const sections = document.querySelectorAll('section[id]');
-    if (sections.length > 0) {
-        const navObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const activeLink = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
-                    navLinks.forEach(link => link.classList.remove('active'));
-                    if (activeLink) activeLink.classList.add('active');
-                }
-            });
-        }, { threshold: 0.3 });
-        sections.forEach(section => navObserver.observe(section));
-    }
+  return lines
+    .map(
+      (line) =>
+        `<span class="hero-title-line ${line.className}">${line.text}</span>`
+    )
+    .join("");
 }
 
-// 3. SCROLL ANIMATIONS
-function initScrollAnimations() {
-    const animatedElements = document.querySelectorAll('.section-title, .experience-card, .project-card, .skill-item');
-    if (animatedElements.length === 0) return;
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                // Staggered delay based on index of batch
-                setTimeout(() => {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }, 100); 
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-
-    animatedElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'all 0.6s ease-out';
-        observer.observe(el);
-    });
+function renderContactItem(item) {
+  return `
+    <div class="contact-item">
+      <div class="contact-icon-wrap">
+        <img src="assets/img/${item.icon}" alt="${item.label}">
+      </div>
+      <div>
+        <span>${item.label}</span>
+        <a href="${item.href}" ${
+          item.href.startsWith("http") ? 'target="_blank" rel="noopener"' : ""
+        }>${item.value}</a>
+      </div>
+    </div>
+  `;
 }
 
-// 4. PROJECT FILTERING
-function initProjectFiltering() {
-    const categoryBtns = document.querySelectorAll('.category-btn');
-    const projectCards = document.querySelectorAll('.project-card');
+function renderLanguageBlock(language) {
+  const details = language.details.length
+    ? `
+      <div class="language-details">
+        ${language.details
+          .map(
+            (detail) => `
+              <div class="detail-row">
+                <span>${detail.label}</span>
+                <div class="progress"><span style="width: ${detail.value}%;"></span></div>
+                <span>${detail.value}%</span>
+              </div>
+            `
+          )
+          .join("")}
+      </div>
+    `
+    : "";
 
-    if (categoryBtns.length === 0) return;
-
-    categoryBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const category = btn.getAttribute('data-category');
-
-            categoryBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            projectCards.forEach(card => {
-                const cardCategory = card.getAttribute('data-category');
-                if (category === 'all' || cardCategory === category) {
-                    card.style.display = 'flex';
-                    setTimeout(() => card.style.opacity = '1', 50);
-                } else {
-                    card.style.display = 'none';
-                    card.style.opacity = '0';
-                }
-            });
-        });
-    });
+  return `
+    <div class="language-block">
+      <div class="language-head">
+        <strong>${language.name}</strong>
+        <span class="language-level">${language.level}</span>
+        <span class="language-value">${language.value}%</span>
+      </div>
+      <div class="progress"><span style="width: ${language.value}%;"></span></div>
+      ${details}
+    </div>
+  `;
 }
 
-// 5. CONTACT FORM
-function initContactForm() {
-    const form = document.getElementById('contactForm');
-    if (!form) return;
-
-    const inputs = form.querySelectorAll('.form-input');
-
-    // Input Focus Effects
-    inputs.forEach(input => {
-        input.addEventListener('focus', () => input.parentElement.classList.add('focused'));
-        input.addEventListener('blur', () => {
-            if (!input.value) input.parentElement.classList.remove('focused');
-        });
-    });
-
-    // Submit Logic
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const message = document.getElementById('message').value.trim();
-
-        const subject = `Portfolio Contact from ${name}`;
-        const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-        
-        // Opens default mail client
-        window.open(`mailto:amirrahimian2@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
-    });
+function renderStackItem(item) {
+  return `
+    <div class="stack-group">
+      <div class="stack-item">
+        <img src="assets/img/${item.icon}" alt="${item.name}">
+        <strong>${item.name}</strong>
+        <span>${item.value}%</span>
+      </div>
+      <div class="progress"><span style="width: ${item.value}%;"></span></div>
+    </div>
+  `;
 }
 
-// 6. APPLE STYLE EFFECTS (Ripple & Hover)
-function initAppleStyleEffects() {
-    // Button Ripple
-    const buttons = document.querySelectorAll('.btn-primary, .btn-secondary, .btn-submit, .btn-outline');
-    
-    buttons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            const circle = document.createElement('span');
-            const diameter = Math.max(button.clientWidth, button.clientHeight);
-            const radius = diameter / 2;
+function calculateAge(birthDate) {
+  const today = new Date();
+  const birth = new Date(birthDate);
+  let age = today.getFullYear() - birth.getFullYear();
+  const monthDiff = today.getMonth() - birth.getMonth();
+  const hasBirthdayPassed =
+    monthDiff > 0 || (monthDiff === 0 && today.getDate() >= birth.getDate());
 
-            circle.style.width = circle.style.height = `${diameter}px`;
-            circle.style.left = `${e.clientX - button.getBoundingClientRect().left - radius}px`;
-            circle.style.top = `${e.clientY - button.getBoundingClientRect().top - radius}px`;
-            circle.classList.add('ripple');
+  if (!hasBirthdayPassed) {
+    age -= 1;
+  }
 
-            const ripple = button.getElementsByClassName('ripple')[0];
-            if (ripple) ripple.remove();
-
-            button.appendChild(circle);
-        });
-    });
-
-    // Keyboard Navigation Accessibility
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Tab') document.body.classList.add('keyboard-nav');
-    });
-    document.addEventListener('mousedown', () => {
-        document.body.classList.remove('keyboard-nav');
-    });
-
-    // Page Load Animation
-    window.addEventListener('load', () => {
-        document.body.style.opacity = '1';
-    });
+  return age;
 }
 
-// 7. HERO TYPING EFFECT
-function initHeroTyping() {
-    const tagline = document.querySelector('.hero-tagline');
-    if (!tagline) return;
+function setMetaContent(selector, content) {
+  const element = document.querySelector(selector);
+  if (element) {
+    element.setAttribute("content", content);
+  }
+}
 
-    const isPersian = document.documentElement.lang === 'fa';
-    
-    const enRoles = [
-        "Developer & Designer",
-        "UI/UX Designer", 
-        ":)"
-    ];
-    
-    const faRoles = [
-        "توسعه‌دهنده و طراح",
-        "طراح UI/UX",
-        ":)"
-    ];
+function setText(selector, value) {
+  const element = document.querySelector(selector);
+  if (element) {
+    element.textContent = value;
+  }
+}
 
-    let roleIndex = 0;
-    let charIndex = isPersian ? faRoles[0].length : enRoles[0].length;
-    let isDeleting = true;
-    
-    // Select the appropriate span based on language
-    const textSpan = isPersian 
-        ? tagline.querySelector('.fa-only')
-        : tagline.querySelector('.en-only');
-        
-    if (!textSpan) return;
+function setHTML(selector, value) {
+  const element = document.querySelector(selector);
+  if (element) {
+    element.innerHTML = value;
+  }
+}
 
-    function type() {
-        const currentRoles = isPersian ? faRoles : enRoles;
-        const currentRole = currentRoles[roleIndex];
+function setContainerHTML(selector, value) {
+  setHTML(selector, value);
+}
 
-        if (isDeleting) {
-            textSpan.textContent = currentRole.substring(0, charIndex - 1);
-            charIndex--;
-        } else {
-            textSpan.textContent = currentRole.substring(0, charIndex + 1);
-            charIndex++;
-        }
-
-        let typeSpeed = isDeleting ? 50 : 100;
-
-        if (!isDeleting && charIndex === currentRole.length) {
-            typeSpeed = 3000;
-            isDeleting = true;
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            roleIndex = (roleIndex + 1) % currentRoles.length;
-            typeSpeed = 500;
-        }
-
-        setTimeout(type, typeSpeed);
-    }
-
-    setTimeout(type, 3000);
+function setPlaceholder(selector, value) {
+  const element = document.querySelector(selector);
+  if (element) {
+    element.setAttribute("placeholder", value);
+  }
 }
