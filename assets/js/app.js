@@ -4,6 +4,9 @@ const state = {
   data: null,
   lang: "fa",
   sectionObserver: null,
+  scrollHandler: null,
+  resizeHandler: null,
+  heroPortraitReady: false,
 };
 
 async function initApp() {
@@ -18,7 +21,6 @@ async function initApp() {
     bindLanguageSwitcher();
     bindSmoothScroll();
     bindContactForm();
-    bindHeroMotion();
 
     setLanguage(getInitialLanguage());
   } catch (error) {
@@ -65,7 +67,8 @@ function bindSmoothScroll() {
     }
 
     event.preventDefault();
-    section.scrollIntoView({ behavior: "smooth", block: "start" });
+    const top = section.getBoundingClientRect().top + window.scrollY - 120;
+    window.scrollTo({ top, behavior: "smooth" });
   });
 }
 
@@ -95,28 +98,6 @@ function bindContactForm() {
         : `Name: ${name}\nEmail: ${email}\n\n${message}`;
 
     window.location.href = `mailto:${state.data.site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  });
-}
-
-function bindHeroMotion() {
-  const heroVisual = document.querySelector(".hero-visual");
-  const portraitFrame = document.querySelector(".portrait-frame");
-  if (!heroVisual || !portraitFrame) {
-    return;
-  }
-
-  heroVisual.addEventListener("mousemove", (event) => {
-    const bounds = heroVisual.getBoundingClientRect();
-    const relativeX = (event.clientX - bounds.left) / bounds.width - 0.5;
-    const relativeY = (event.clientY - bounds.top) / bounds.height - 0.5;
-    const rotateY = relativeX * 8;
-    const rotateX = relativeY * -8;
-
-    portraitFrame.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-  });
-
-  heroVisual.addEventListener("mouseleave", () => {
-    portraitFrame.style.transform = "perspective(1200px) rotateX(0deg) rotateY(0deg)";
   });
 }
 
@@ -206,10 +187,7 @@ function renderHero() {
   setHTML("#hero-title", buildHeroTitle(state.lang));
   setText("#hero-role", hero.role);
   setText("#hero-summary", hero.summary);
-  setContainerHTML(
-    "#hero-facts",
-    hero.facts.map((fact) => `<span class="fact-chip">${fact}</span>`).join("")
-  );
+  setContainerHTML("#hero-facts", "");
 
   const primaryButton = document.getElementById("hero-primary-action");
   const secondaryButton = document.getElementById("hero-secondary-action");
@@ -221,11 +199,11 @@ function renderHero() {
   }
 
   setContainerHTML(
-    "#photo-badges",
-    hero.badges
-      .map((badge) => `<span class="photo-badge">${badge.replace("{age}", age)}</span>`)
-      .join("")
+    "#hero-badges",
+    hero.badges.map((badge) => renderHeroBadge(badge, age)).join("")
   );
+
+  loadHeroPortrait();
 }
 
 function renderSidebar() {
@@ -331,8 +309,8 @@ function renderEmployment() {
 
   list.innerHTML = section.items
     .map(
-      (item) => `
-        <article class="timeline-entry">
+      (item, index) => `
+        <article class="timeline-entry ${index % 2 === 0 ? "timeline-entry--left" : "timeline-entry--right"}">
           <div class="timeline-card">
             <h3>${item.title}</h3>
             <p>${item.subtitle}</p>
@@ -360,12 +338,9 @@ function renderProjects() {
 
   list.innerHTML = section.items
     .map(
-      (item) => `
-        <article class="project-entry">
+      (item, index) => `
+        <article class="project-entry ${index % 2 === 0 ? "project-entry--left" : "project-entry--right"}">
           <div class="project-card">
-            <div class="project-card-media">
-              <img src="assets/img/${item.image}" alt="${item.title}">
-            </div>
             <div class="project-card-body">
               <h3>${item.title}</h3>
               <span class="project-role">${item.role}</span>
@@ -373,6 +348,9 @@ function renderProjects() {
             </div>
           </div>
           <div class="project-date">${item.date}</div>
+          <div class="project-card-media">
+            <img src="assets/img/${item.image}" alt="${item.title}">
+          </div>
         </article>
       `
     )
@@ -432,7 +410,7 @@ function renderPersonSchema() {
     email: site.email,
     telephone: site.phone,
     url: "https://amir-rahimian.github.io/",
-    image: "https://amir-rahimian.github.io/assets/img/face.png",
+    image: "https://amir-rahimian.github.io/assets/img/portfolioIcon.png",
     jobTitle: state.lang === "fa" ? site.brandRoleFa : site.brandRoleEn,
     sameAs: [site.github, site.linkedin],
     address: {
@@ -450,31 +428,77 @@ function initSectionObserver() {
     state.sectionObserver.disconnect();
   }
 
-  const sections = [...document.querySelectorAll("section[id], aside[id]")];
+  if (state.scrollHandler) {
+    window.removeEventListener("scroll", state.scrollHandler, { passive: true });
+  }
+  if (state.resizeHandler) {
+    window.removeEventListener("resize", state.resizeHandler);
+  }
+
   const navLinks = [...document.querySelectorAll(".nav-link")];
+  const sectionIds = new Set(navLinks.map((link) => link.dataset.section));
+  const sections = [...document.querySelectorAll("section[id], aside[id]")].filter((section) =>
+    sectionIds.has(section.id)
+  );
   if (!sections.length || !navLinks.length) {
     return;
   }
 
-  state.sectionObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
+  const setActiveLink = (id) => {
+    navLinks.forEach((link) => {
+      link.classList.toggle("active", link.dataset.section === id);
+    });
+  };
 
-        navLinks.forEach((link) => {
-          link.classList.toggle("active", link.dataset.section === entry.target.id);
-        });
-      });
-    },
-    {
-      rootMargin: "-20% 0px -60% 0px",
-      threshold: 0.2,
-    }
-  );
+  const updateActiveSection = () => {
+    const offset = 140;
+    let activeId = sections[0]?.id || "";
+    let bestDistance = Number.POSITIVE_INFINITY;
 
-  sections.forEach((section) => state.sectionObserver.observe(section));
+    sections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      const distance = Math.abs(rect.top - offset);
+
+      if (rect.top <= offset && rect.bottom > offset) {
+        activeId = section.id;
+        return;
+      }
+
+      if (distance < bestDistance) {
+        bestDistance = distance;
+        activeId = section.id;
+      }
+    });
+
+    setActiveLink(activeId);
+  };
+
+  updateActiveSection();
+
+  state.scrollHandler = () => updateActiveSection();
+  state.resizeHandler = () => updateActiveSection();
+
+  window.addEventListener("scroll", state.scrollHandler, { passive: true });
+  window.addEventListener("resize", state.resizeHandler);
+}
+
+function loadHeroPortrait() {
+  const portrait = document.getElementById("hero-portrait");
+  if (!portrait || state.heroPortraitReady) {
+    return;
+  }
+
+  portrait.style.opacity = "0";
+  const gif = new Image();
+  gif.src = portrait.dataset.gifSrc || "assets/img/face.gif";
+
+  gif.onload = () => {
+    window.requestAnimationFrame(() => {
+      portrait.src = gif.src;
+      portrait.style.opacity = "1";
+      state.heroPortraitReady = true;
+    });
+  };
 }
 
 function buildHeroTitle(lang) {
@@ -499,6 +523,23 @@ function buildHeroTitle(lang) {
         `<span class="hero-title-line ${line.className}">${line.text}</span>`
     )
     .join("");
+}
+
+function renderHeroBadge(badge, age) {
+  const label = (badge.text || badge.label || badge.value || "")
+    .replace("{age}", age)
+    .trim();
+
+  if (badge.icon) {
+    return `
+      <div class="hero-badge">
+        <img src="assets/img/${badge.icon}" alt="${label}">
+        <span>${label}</span>
+      </div>
+    `;
+  }
+
+  return `<div class="hero-badge">${label}</div>`;
 }
 
 function renderContactItem(item) {
@@ -554,10 +595,14 @@ function renderStackItem(item) {
     <div class="stack-group">
       <div class="stack-item">
         <img src="assets/img/${item.icon}" alt="${item.name}">
-        <strong>${item.name}</strong>
-        <span>${item.value}%</span>
+        <div class="stack-meta">
+          <div class="stack-name-row">
+            <strong>${item.name}</strong>
+            <span>${item.value}%</span>
+          </div>
+          <div class="progress"><span style="width: ${item.value}%;"></span></div>
+        </div>
       </div>
-      <div class="progress"><span style="width: ${item.value}%;"></span></div>
     </div>
   `;
 }

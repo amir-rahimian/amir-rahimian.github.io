@@ -24,10 +24,6 @@
         "label": "Education"
       },
       {
-        "id": "skills",
-        "label": "Skills"
-      },
-      {
         "id": "employment",
         "label": "Employment"
       },
@@ -50,10 +46,6 @@
         "label": "تحصیلات"
       },
       {
-        "id": "skills",
-        "label": "مهارت ها"
-      },
-      {
         "id": "employment",
         "label": "سوابق کاری"
       },
@@ -71,7 +63,7 @@
     "en": {
       "kicker": "Portfolio",
       "role": "Android Developer, UI/UX Designer, AI Student",
-      "summary": "I design and build mobile experiences with a product mindset, mixing interface design, Android development, Flutter, and visual identity work into one practical workflow.",
+      "summary": "Creative designer and up‑to‑date Android developer. AI student. You can call me a UI designer or a logo designer and if you need an Android dev, I work with Java, Kotlin, and Flutter. I've also got my hands in IoT and AI.",
       "facts": [
         "Based in Yazd, Iran",
         "Focused on mobile products and interfaces",
@@ -82,15 +74,30 @@
         "secondary": "Hire Me"
       },
       "badges": [
-        "IRAN / YAZD",
-        "OPEN TO WORK",
-        "{age} Years Old"
+        {
+          "label": "Java",
+          "icon": "java.png"
+        },
+        {
+          "label": "Kotlin",
+          "icon": "kotlin.png"
+        },
+        {
+          "label": "UiUx",
+          "icon": "figma.png"
+        },
+        {
+          "text": "{age} Years Old"
+        },
+        {
+          "text": "Yazd, Iran"
+        }
       ]
     },
     "fa": {
       "kicker": "پورتفولیو",
       "role": "توسعه دهنده اندروید، طراح UI/UX، دانشجوی هوش مصنوعی",
-      "summary": "من تجربه های موبایلی را با نگاه محصول طراحی و پیاده سازی می کنم؛ از رابط کاربری و هویت بصری تا توسعه اندروید و فلاتر، همه را در یک مسیر کاربردی و منسجم پیش می برم.",
+      "summary": "طراح خلاق و برنامه‌نویس بروز در توسعه نرم‌افزارهای اندروید. دانشجوی هوش مصنوعی. می‌تونی من رو طراح رابط کاربری صدا کنی یا طراح لوگو، اگه برنامه‌نویس اندروید هم بخوای، توی جاوا و کاتلین و فلاتر باهات همکاری می‌کنم. تو IoT و هوش مصنوعی هم دستی بر آتیش دارم",
       "facts": [
         "ساکن یزد، ایران",
         "متمرکز بر محصولات موبایلی و رابط کاربری",
@@ -101,9 +108,24 @@
         "secondary": "همکاری با من"
       },
       "badges": [
-        "ایران / یزد",
-        "آماده همکاری",
-        "{age} ساله"
+        {
+          "label": "جاوا",
+          "icon": "java.png"
+        },
+        {
+          "label": "کاتلین",
+          "icon": "kotlin.png"
+        },
+        {
+          "label": "UiUx",
+          "icon": "figma.png"
+        },
+        {
+          "text": "{age} ساله"
+        },
+        {
+          "text": "یزد، ایران"
+        }
       ]
     }
   },
@@ -143,11 +165,11 @@
         }
       ],
       "softSkills": [
-        "Teamwork & Communication",
-        "Problem Solving",
-        "Project Management",
-        "Self Learning",
-        "Product Thinking"
+        "🤝 Teamwork & Communication",
+        "🧠 Problem Solving",
+        "📋 Project Management",
+        "📚 Self Learning",
+        "🧩 Product Thinking"
       ],
       "languages": [
         {
@@ -189,7 +211,7 @@
     },
     "fa": {
       "contactTitle": "اطلاعات تماس",
-      "softSkillsTitle": "مهارت های نرم",
+      "softSkillsTitle": "مهارت ",
       "languagesTitle": "زبان ها",
       "programmingTitle": "زبان های برنامه نویسی",
       "toolsTitle": "ابزارها",
@@ -222,11 +244,11 @@
         }
       ],
       "softSkills": [
-        "کار تیمی و ارتباط",
-        "حل مسئله",
-        "مدیریت پروژه",
-        "یادگیری مستمر",
-        "نگاه محصول محور"
+        "🤝 کار تیمی و ارتباط",
+        "🧠 حل مسئله",
+        "📋 مدیریت پروژه",
+        "📚 یادگیری مستمر",
+        "🧩 نگاه محصول محور"
       ],
       "languages": [
         {
@@ -692,7 +714,7 @@
     }
   },
   "footer": {
-    "en": "Designed and developed by Amir Hossein Rahimian.",
-    "fa": "طراحی و توسعه شده توسط امیرحسین رحیمیان."
+    "en": "Designed and developed by 💌 Amir Hossein Rahimian.",
+    "fa": "طراحی و توسعه شده توسط 💌 امیرحسین رحیمیان."
   }
 }
