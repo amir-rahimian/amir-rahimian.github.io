@@ -76,15 +76,15 @@
       "badges": [
         {
           "label": "Java",
-          "icon": "java.png"
+          "icon": "java.svg"
         },
         {
           "label": "Kotlin",
-          "icon": "kotlin.png"
+          "icon": "kotlin.svg"
         },
         {
           "label": "UiUx",
-          "icon": "figma.png"
+          "icon": "figma.svg"
         },
         {
           "text": "{age} Years Old"
@@ -110,15 +110,15 @@
       "badges": [
         {
           "label": "جاوا",
-          "icon": "java.png"
+          "icon": "java.svg"
         },
         {
           "label": "کاتلین",
-          "icon": "kotlin.png"
+          "icon": "kotlin.svg"
         },
         {
           "label": "UiUx",
-          "icon": "figma.png"
+          "icon": "figma.svg"
         },
         {
           "text": "{age} ساله"
@@ -143,25 +143,25 @@
           "label": "Email",
           "value": "amirrahimian2@gmail.com",
           "href": "mailto:amirrahimian2@gmail.com",
-          "icon": "email.png"
+          "icon": "email.svg"
         },
         {
           "label": "Phone",
           "value": "+98 921 987 2447",
           "href": "tel:+989219872447",
-          "icon": "phone.png"
+          "icon": "phone.svg"
         },
         {
           "label": "GitHub",
           "value": "@amir-rahimian",
           "href": "https://github.com/amir-rahimian",
-          "icon": "github.png"
+          "icon": "github.svg"
         },
         {
           "label": "LinkedIn",
           "value": "@amirrahimian",
           "href": "https://www.linkedin.com/in/amirrahimian",
-          "icon": "linkdin.png"
+          "icon": "linkedin.svg"
         }
       ],
       "softSkills": [
@@ -222,25 +222,25 @@
           "label": "ایمیل",
           "value": "amirrahimian2@gmail.com",
           "href": "mailto:amirrahimian2@gmail.com",
-          "icon": "email.png"
+          "icon": "email.svg"
         },
         {
           "label": "تلفن",
           "value": "+98 921 987 2447",
           "href": "tel:+989219872447",
-          "icon": "phone.png"
+          "icon": "phone.svg"
         },
         {
           "label": "گیت هاب",
           "value": "@amir-rahimian",
           "href": "https://github.com/amir-rahimian",
-          "icon": "github.png"
+          "icon": "github.svg"
         },
         {
           "label": "لینکدین",
           "value": "@amirrahimian",
           "href": "https://www.linkedin.com/in/amirrahimian",
-          "icon": "linkdin.png"
+          "icon": "linkedin.svg"
         }
       ],
       "softSkills": [
@@ -293,66 +293,66 @@
         {
           "name": "Java",
           "value": 90,
-          "icon": "java.png"
+          "icon": "java.svg"
         },
         {
           "name": "Kotlin",
           "value": 80,
-          "icon": "kotlin.png"
+          "icon": "kotlin.svg"
         },
         {
           "name": "Dart",
           "value": 90,
-          "icon": "dart.png"
+          "icon": "dart.svg"
         },
         {
           "name": "C, C++",
           "value": 80,
-          "icon": "c++.png"
+          "icon": "c++.svg"
         },
         {
           "name": "Python",
           "value": 50,
-          "icon": "python.png"
+          "icon": "python.svg"
         }
       ],
       "tools": [
         {
           "name": "Git",
           "value": 95,
-          "icon": "git.png"
+          "icon": "git.svg"
         },
         {
           "name": "Figma",
           "value": 95,
-          "icon": "figma.png"
+          "icon": "figma.svg"
         },
         {
           "name": "Adobe Xd",
           "value": 95,
-          "icon": "xd.png"
+          "icon": "xd.svg"
         },
         {
           "name": "Photoshop",
           "value": 75,
-          "icon": "photoshop.png"
+          "icon": "photoshop.svg"
         },
         {
           "name": "Illustrator",
           "value": 80,
-          "icon": "illustrator.png"
+          "icon": "illustrator.svg"
         }
       ],
       "systems": [
         {
           "name": "Windows",
           "value": 80,
-          "icon": "windows.png"
+          "icon": "windows.svg"
         },
         {
           "name": "Linux",
           "value": 30,
-          "icon": "linux.png"
+          "icon": "linux.svg"
         }
       ]
     }
@@ -658,17 +658,17 @@
         {
           "label": "Email Me",
           "href": "mailto:amirrahimian2@gmail.com",
-          "icon": "email.png"
+          "icon": "email.svg"
         },
         {
           "label": "Call Me",
           "href": "tel:+989219872447",
-          "icon": "phone.png"
+          "icon": "phone.svg"
         },
         {
           "label": "LinkedIn",
           "href": "https://www.linkedin.com/in/amirrahimian",
-          "icon": "linkdin.png"
+          "icon": "linkedin.svg"
         }
       ],
       "cardLabel": "Hiring Section",
@@ -689,17 +689,17 @@
         {
           "label": "ارسال ایمیل",
           "href": "mailto:amirrahimian2@gmail.com",
-          "icon": "email.png"
+          "icon": "email.svg"
         },
         {
           "label": "تماس تلفنی",
           "href": "tel:+989219872447",
-          "icon": "phone.png"
+          "icon": "phone.svg"
         },
         {
           "label": "لینکدین",
           "href": "https://www.linkedin.com/in/amirrahimian",
-          "icon": "linkdin.png"
+          "icon": "linkedin.svg"
         }
       ],
       "cardLabel": "بخش همکاری",
