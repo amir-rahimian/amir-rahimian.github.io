@@ -1,0 +1,332 @@
+{
+  "site": {
+    "name": "امیرحسین رحیمیان",
+    "brandRole": "توسعه دهنده اندروید / طراح رابط کاربری",
+    "location": "یزد، ایران"
+  },
+  "seo": {
+    "keywords": "امیرحسین رحیمیان ، یزد، توسعه دهنده اندروید، طراح رابط کاربری، طراح لوگو، پورتفولیو"
+  },
+  "nav": [
+    {
+      "id": "home",
+      "label": "خانه"
+    },
+    {
+      "id": "projects",
+      "label": "پروژه‌ها"
+    },
+    {
+      "id": "contact",
+      "label": "دعوت به همکاری"
+    }
+  ],
+  "hero": {
+    "kicker": "پورتفولیو",
+    "role": "توسعه دهنده اندروید، طراح UI/UX، دانشجوی هوش مصنوعی",
+    "summary": "محصولات موبایل را از طراحی رابط تا توسعه اپلیکیشن اندروید می‌سازم؛ به هوش مصنوعی و دستگاه‌های متصل هم می‌پردازم.",
+    "facts": [
+      "ساکن یزد، ایران",
+      "طراحی محصول و اپلیکیشن موبایل",
+      "هوش مصنوعی و دستگاه‌های متصل"
+    ],
+    "buttons": {
+      "primary": "مشاهده پروژه ها",
+      "secondary": "همکاری با من"
+    },
+    "badges": [
+      {
+        "text": "YAZD, IRAN"
+      },
+      {
+        "text": "ANDROID"
+      },
+      {
+        "text": "UI / UX"
+      },
+      {
+        "text": "AI"
+      },
+      {
+        "text": "{age} ساله"
+      }
+    ],
+    "title": [
+      {
+        "text": "سلام، من",
+        "className": "hero-title-small"
+      },
+      {
+        "text": "امیرحسین",
+        "className": "hero-title-big"
+      },
+      {
+        "text": "رحیمیان",
+        "className": "hero-title-medium"
+      },
+      {
+        "text": "علی‌آباد",
+        "className": "hero-title-small"
+      }
+    ]
+  },
+  "sidebar": {
+    "contactTitle": "اطلاعات تماس",
+    "softSkillsTitle": "مهارت ",
+    "languagesTitle": "زبان ها",
+    "programmingTitle": "زبان های برنامه نویسی",
+    "toolsTitle": "ابزارها",
+    "systemsTitle": "سیستم عامل ها",
+    "languageStatsLabel": "جزئیات",
+    "contacts": [
+      {
+        "label": "ایمیل",
+        "value": "amirrahimian2@gmail.com",
+        "href": "mailto:amirrahimian2@gmail.com",
+        "icon": "email.svg"
+      },
+      {
+        "label": "تلفن",
+        "value": "+98 921 987 2447",
+        "href": "tel:+989219872447",
+        "icon": "phone.svg"
+      },
+      {
+        "label": "گیت هاب",
+        "value": "@amir-rahimian",
+        "href": "https://github.com/amir-rahimian",
+        "icon": "github.svg"
+      },
+      {
+        "label": "لینکدین",
+        "value": "@amirrahimian",
+        "href": "https://www.linkedin.com/in/amirrahimian",
+        "icon": "linkedin.svg"
+      }
+    ],
+    "softSkills": [
+      "همکاری و ارتباط",
+      "حل مسئله",
+      "نگاه محصول‌محور",
+      "برنامه‌ریزی پروژه",
+      "یادگیری مستقل"
+    ],
+    "languages": [
+      {
+        "name": "فارسی",
+        "level": "زبان مادری",
+        "value": 100,
+        "details": []
+      },
+      {
+        "name": "English",
+        "level": "زبان دوم",
+        "value": 60,
+        "details": [
+          {
+            "label": "Reading",
+            "value": 60
+          },
+          {
+            "label": "Listening",
+            "value": 70
+          },
+          {
+            "label": "Speaking",
+            "value": 60
+          },
+          {
+            "label": "Writing",
+            "value": 40
+          }
+        ]
+      },
+      {
+        "name": "French",
+        "level": "علاقه مند به یادگیری",
+        "value": 0,
+        "details": []
+      }
+    ]
+  },
+  "education": {
+    "kicker": "مسیر آکادمیک",
+    "title": "تحصیلات",
+    "description": "از پایه‌های مهندسی تا ادامه تحصیل در هوش مصنوعی.",
+    "items": [
+      {
+        "start": "2016 Sep",
+        "end": "2019 Jun",
+        "degree": "ریاضی فیزیک",
+        "place": "یزد/دبیرستان جعفری نعیمی",
+        "status": "دیپلم",
+        "grade": "معدل: 18.87"
+      },
+      {
+        "start": "2019 Sep",
+        "end": "2024 Jun",
+        "degree": "مهندسی کامپیوتر",
+        "place": "دانشگاه باهنر کرمان",
+        "status": "لیسانس مهندسی کامپیوتر[هوش مصنوعی]",
+        "grade": "معدل:16.80"
+      },
+      {
+        "start": "2024 Sep",
+        "end": "اکنون",
+        "degree": "هوش مصنوعی",
+        "place": "دانشگاه یزد",
+        "status": "کارشناسی ارشد",
+        "grade": "در حال تحصیل"
+      }
+    ]
+  },
+  "employment": {
+    "kicker": "تایم لاین حرفه ای",
+    "title": "سوابق کاری",
+    "description": "طراحی، توسعه اندروید، کار محصول و تدریس.",
+    "items": [
+      {
+        "date": "۱۳۹۴ تیر",
+        "title": "فری لنسر",
+        "subtitle": "طراحی",
+        "lines": [
+          "طراحی لوگو، تبلیغاتی و مناسبتی",
+          "شروع جدی مسیر نگاه بصری و دیزاین"
+        ]
+      },
+      {
+        "date": "۱۳۹۶ خرداد",
+        "title": "فری لنسر",
+        "subtitle": "طراح UI UX",
+        "lines": [
+          "طراحی رابط کاربری",
+          "اپلیکیشن های موبایلی و وبسایت ها"
+        ]
+      },
+      {
+        "date": "۱۳۹۷ مرداد",
+        "title": "استارتاپ بُرد بُرد",
+        "subtitle": "سامانه فروشگاهی هوشمند / ۱ سال",
+        "lines": [
+          "طراحی رابط کاربری",
+          "سناریو نویسی بازی"
+        ]
+      },
+      {
+        "date": "۱۳۹۸ آبان",
+        "title": "فری لنسر",
+        "subtitle": "توسعه اندروید",
+        "lines": [
+          "جاوا و Android Studio",
+          "پیاده سازی جریان های کاربردی در موبایل"
+        ]
+      },
+      {
+        "date": "۱۳۹۹ مهر",
+        "title": "استارتاپ یونیمون",
+        "subtitle": "سامانه قرض و فروش کتاب / ۸ ماه",
+        "lines": [
+          "ایده پردازی و UX",
+          "جهت دهی محصول و طراحی رابط کاربری"
+        ]
+      },
+      {
+        "date": "۱۴۰۰ مرداد",
+        "title": "Lumos",
+        "subtitle": "استخدام پاره وقت",
+        "lines": [
+          "طراح رابط کاربری، برنامه نویسی اندروید، برنامه نویسی سخت افزار",
+          "همکاری مستمر روی تجربه خانه هوشمند"
+        ]
+      },
+      {
+        "date": "۱۴۰۲ مهر",
+        "title": "دانشگاه ملی مهارت",
+        "subtitle": "مدرس اندروید",
+        "lines": [
+          "تدریس برنامه نویسی موبایل ۱ و ۲",
+          "کمک به دانشجوها برای عبور از مبانی به نگاه محصول"
+        ]
+      }
+    ]
+  },
+  "projects": {
+    "kicker": "کارهای منتخب",
+    "title": "پروژه ها",
+    "description": "گزیده‌ای از پروژه‌های موبایل، صنعتی و خانه هوشمند.",
+    "items": [
+      {
+        "date": "۱۳۹۹ آبان",
+        "title": "دانشگاهمون ؟! / پلتفرم خرید و فروش کتاب",
+        "role": "طراح رابط کاربری، لوگو",
+        "summary": "در دوران دانشگاه، همراه با گروهی از دوستان، ایده استارتاپی شکل گرفت و طراحی شد تا پلتفرمی کارآمد برای خرید و فروش، قرض دادن کتاب و انتشار آگهی های دانشجویی فراهم شود.",
+        "image": "unimunPhoto.png",
+        "gallery": ["unimunPhoto.webp", "unimunMobile.webp", "unimunDesktop.webp"]
+      },
+      {
+        "date": "۱۴۰۰ مرداد",
+        "title": "کنترل نور تکنوصاف",
+        "role": "طراح رابط کاربری، برنامه نویس اندروید",
+        "summary": "برای مدیریت پنل های نوری مجموعه تکنوصاف، یک رابط موبایلی صنعتی طراحی و پیاده سازی شد تا تنظیمات و کنترل دستگاه به شکل ساده تری انجام شود.",
+        "image": "technoSafPhoto.png",
+        "gallery": ["technoSafPhoto.webp", "technoSafMobile.webp", "technoSafPanel.webp"]
+      },
+      {
+        "date": "۱۴۰۰ آبان",
+        "title": "خانه هوشمند Lumos",
+        "role": "طراح رابط کاربری، طراح لوگو، برنامه نویس اندروید",
+        "summary": "یک اکوسیستم خانه هوشمند با چند مرحله بازطراحی رابط کاربری که روی سادگی، کنترل های مدرن و توسعه مستمر محصول تمرکز دارد.",
+        "image": "lumosPhoto.png",
+        "gallery": ["lumosPhoto.webp", "lumosMobile.webp", "lumosDashboard.webp"]
+      },
+      {
+        "date": "۱۴۰۱ مهر",
+        "title": "سیستم رنگ سازی پارچه",
+        "role": "طراح رابط کاربری، برنامه نویس اندروید",
+        "summary": "رابط کاربری صنعتی برای دستگاه ترکیب و تولید رنگ پارچه که برای نمایشگر دستگاه طراحی شد و ظرفیت توسعه در نسخه های بعدی را دارد.",
+        "image": "coloringAppPhoto.png",
+        "gallery": ["coloringAppPhoto.webp", "coloringAppSettings.webp", "coloringAppMonitor.webp"]
+      },
+      {
+        "date": "۱۴۰۲ خرداد",
+        "title": "گلخانه هوشمند",
+        "role": "طراح رابط کاربری، برنامه نویس اندروید",
+        "summary": "یک تجربه کنترل و پایش برای گلخانه خودکار که با هدف ساده سازی مدیریت محیط و آماده سازی برای نسخه های تحلیلی آینده طراحی شد.",
+        "image": "greenhousePhoto.png",
+        "gallery": ["greenhousePhoto.webp", "greenhouseOverview.webp", "greenhouseDetails.webp"]
+      }
+    ]
+  },
+  "contact": {
+    "kicker": "آماده همکاری",
+    "title": "برای محصول موبایل، رابط کاربری یا دیزاین سیستم دنبال همکاری هستی؟",
+    "description": "برای پروژه های فریلنس، همکاری محصول، توسعه اندروید و بازطراحی رابط کاربری آماده همکاری هستم.",
+    "actions": [
+      {
+        "label": "ارسال ایمیل",
+        "href": "mailto:amirrahimian2@gmail.com",
+        "icon": "email.svg"
+      },
+      {
+        "label": "تماس تلفنی",
+        "href": "tel:+989219872447",
+        "icon": "phone.svg"
+      },
+      {
+        "label": "لینکدین",
+        "href": "https://www.linkedin.com/in/amirrahimian",
+        "icon": "linkedin.svg"
+      }
+    ],
+    "cardLabel": "بخش همکاری",
+    "cardTitle": "بیاییم یک محصول تمیز، کاربردی و دقیق بسازیم.",
+    "cardText": "یک پیام کوتاه درباره پروژه، مرحله محصول یا نیاز طراحی بفرست. پاسخ از طریق ایمیل ارسال می شود.",
+    "form": {
+      "name": "نام شما",
+      "email": "ایمیل",
+      "message": "توضیح کوتاه پروژه",
+      "submit": "ارسال پیام"
+    }
+  },
+  "footer": "طراحی و توسعه شده توسط 💌 امیرحسین رحیمیان."
+}

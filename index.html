@@ -12,51 +12,82 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://amir-rahimian.github.io/">
     <meta property="og:image" content="https://amir-rahimian.github.io/assets/img/portfolioIcon.png">
-    <link rel="icon" type="image/png" href="assets/img/portfolioIcon.png">
+    <link rel="icon" type="image/webp" href="assets/img/portfolioIcon.webp">
+    <link rel="preload" href="assets/img/face.webp" as="image" fetchpriority="high">
     <link rel="stylesheet" href="assets/css/style.css">
     <script type="application/ld+json" id="person-schema"></script>
     <script data-goatcounter="https://amirrahimian.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 
 <body dir="rtl">
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <div class="background-layer" aria-hidden="true">
         <div class="background-orb orb-one"></div>
         <div class="background-orb orb-two"></div>
-        <div class="background-grid"></div>
     </div>
 
     <div class="page-layer">
         <header class="topbar-layer">
             <nav class="topbar" id="navbar" aria-label="Primary">
                 <a href="#home" class="brand" id="brand-link">
-                    <img src="assets/img/portfolioIcon.png" alt="Amir Rahimian logo" class="brand-logo">
+                    <img src="assets/img/portfolioIcon.webp" alt="Amir Rahimian logo" class="brand-logo">
                     <div class="brand-copy">
                         <strong id="brand-name">Amir Rahimian</strong>
                         <span id="brand-role">Android Developer</span>
                     </div>
                 </a>
 
+                <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Toggle navigation"
+                    aria-controls="nav-links" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                </button>
                 <div class="topbar-center">
                     <div class="nav-links" id="nav-links"></div>
                 </div>
-                <!-- <img src="https://visitor-badge.laobi.icu/badge?page_id=amir-rahimian&left_text=%E2%80%8C&left_color=%23595959&right_color=%231283c3&logo=github&radius=5&query_only=true" alt="visitor badge"/> -->
+                <!-- <img src="https://visitor-badge.laobi.icu/badge?page_id=amir-rahimian&left_text=%E2%80%8C&left_color=%23595959&right_color=%231283c3&logo=github&radius=5&query_only=true" alt="visitor badge" width="72" height="24"/> -->
+                <!-- DO NOT REMOVE NEXT LINE -->
                 <img src="https://visitor-badge.laobi.icu/badge?page_id=amir-rahimian&left_text=%E2%80%8C&left_color=%23595959&right_color=%231283c3&logo=github&radius=5" alt="visitor badge"/>
                 <div class="topbar-actions">
-                    <a class="glass-button primary-button" id="resume-link" href="#" target="_blank"
-                        rel="noopener">Resume</a>
-                    <div class="lang-switch" aria-label="Language switcher">
-                        <button class="lang-btn" type="button" data-lang="en">EN</button>
-                        <button class="lang-btn" type="button" data-lang="fa">FA</button>
+                    <details class="resume-menu" id="resume-menu">
+                        <summary class="glass-button primary-button resume-trigger">
+                            <span class="resume-trigger-label" id="resume-trigger-label"></span>
+                            <span class="resume-trigger-icon" aria-hidden="true">↓</span>
+                        </summary>
+                        <div class="resume-options" id="resume-options" role="group">
+                            <a class="resume-link" id="resume-full-link" href="#" target="_blank" rel="noopener">
+                                <span class="resume-link-label"></span>
+                                <span class="resume-size">5.2 MB</span>
+                            </a>
+                            <a class="resume-link" id="resume-eco-link" href="#" target="_blank" rel="noopener">
+                                <span class="resume-link-label"></span>
+                                <span class="resume-size">1.7 MB</span>
+                            </a>
+                        </div>
+                    </details>
+                    <div class="lang-switch" role="group" aria-label="Language switcher">
+                        <button class="lang-btn" type="button" data-lang="en" aria-pressed="false">EN</button>
+                        <button class="lang-btn" type="button" data-lang="fa" aria-pressed="false">FA</button>
                     </div>
                 </div>
             </nav>
         </header>
 
-        <main class="page-content">
+        <main class="page-content" id="main-content">
             <section class="hero-section" id="home">
                 <div class="hero-visual">
-                    <img src="assets/img/face.png" alt="Amir Hossein Rahimian portrait" class="hero-portrait"
-                        id="hero-portrait" data-png-src="assets/img/face.png" data-gif-src="assets/img/face.gif">
+                    <div class="hero-orbits" aria-hidden="true">
+                        <span class="hero-orbit hero-orbit--outer"></span>
+                        <span class="hero-orbit hero-orbit--inner"></span>
+                        <span class="hero-orbit-point"></span>
+                        <span class="hero-sculpture"></span>
+                        <span class="hero-orbit-point hero-orbit-point--second"></span>
+                        <span class="hero-sculpture hero-sculpture--second"></span>
+                    </div>
+                    <div class="hero-portrait-frame">
+                        <img src="assets/img/face.webp" alt="Amir Hossein Rahimian portrait" class="hero-portrait"
+                            id="hero-portrait" fetchpriority="high" decoding="async">
+                    </div>
                     <div class="hero-badges" id="hero-badges"></div>
                 </div>
                 <div class="hero-copy">
@@ -64,7 +95,6 @@
                     <h1 class="hero-title" id="hero-title"></h1>
                     <p class="hero-role" id="hero-role"></p>
                     <p class="hero-summary" id="hero-summary"></p>
-                    <div class="hero-facts" id="hero-facts"></div>
                     <div class="hero-actions">
                         <a href="#projects" class="glass-button primary-button" id="hero-primary-action"></a>
                         <a href="#contact" class="glass-button" id="hero-secondary-action"></a>
@@ -75,10 +105,7 @@
             <section class="content-grid-section">
                 <aside class="sidebar-stack" id="skills">
                     <div id="sidebar-content"></div>
-                </aside>
-
-                <div class="main-stack">
-                    <section class="section-panel" id="education">
+                    <section class="section-panel sidebar-education" id="education">
                         <div class="section-heading">
                             <p class="section-kicker" id="education-kicker"></p>
                             <h2 id="education-title"></h2>
@@ -86,7 +113,9 @@
                         </div>
                         <div class="education-rail" id="education-list"></div>
                     </section>
+                </aside>
 
+                <div class="main-stack">
                     <section class="section-panel" id="employment">
                         <div class="section-heading">
                             <p class="section-kicker" id="employment-kicker"></p>
@@ -109,7 +138,10 @@
 
             <section class="contact-section" id="contact">
                 <div class="contact-copy">
-                    <img class="contact-portrait" src="assets/img/face.png" alt="Amir portrait">
+                    <picture class="contact-portrait" aria-hidden="true">
+                        <source srcset="assets/img/face-animated.webp" type="image/webp">
+                        <img src="assets/img/face.gif" alt="" loading="lazy" decoding="async">
+                    </picture>
                     <p class="section-kicker" id="contact-kicker"></p>
                     <h2 id="contact-title"></h2>
                     <p class="section-description" id="contact-description"></p>
@@ -148,7 +180,7 @@
 
         </footer>
     </div>
-    <script src="assets/js/app.js"></script>
+    <script type="module" src="assets/js/app.js"></script>
 </body>
 
 </html>
