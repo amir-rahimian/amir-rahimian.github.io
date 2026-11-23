@@ -10,10 +10,8 @@ const state = {
   revealObserver: null,
   scrollHandler: null,
   resizeHandler: null,
+  lightbox: { images: [], index: 0, opener: null, title: "" },
 };
-
-let employmentPathFrame = 0;
-let employmentPathObserver = null;
 
 async function initApp() {
   try {
@@ -21,19 +19,8 @@ async function initApp() {
     bindNavigationMenu();
     bindResumeMenu();
     bindContactForm();
-    bindPointerLighting();
     bindProjectGalleries();
-    window.addEventListener("resize", scheduleEmploymentPath);
-    const employmentList = document.getElementById("employment-list");
-    employmentList?.addEventListener("transitionend", (event) => {
-      if (event.target instanceof Element && event.target.classList.contains("timeline-entry")) {
-        scheduleEmploymentPath();
-      }
-    });
-    if (employmentList && "ResizeObserver" in window) {
-      employmentPathObserver = new ResizeObserver(scheduleEmploymentPath);
-      employmentPathObserver.observe(employmentList);
-    }
+    bindProjectLightbox();
 
     await setLanguage(getInitialLanguage());
   } catch (error) {
@@ -143,28 +130,18 @@ function getNavigationMenuLabel(isOpen) {
   return isOpen ? "Close navigation" : "Open navigation";
 }
 
-function bindPointerLighting() {
-  document.addEventListener("pointermove", (event) => {
-    if (event.pointerType === "touch" || !(event.target instanceof Element)) {
-      return;
-    }
-
-    const element = event.target.closest(".hero-visual");
-    if (!element) {
-      return;
-    }
-
-    const bounds = element.getBoundingClientRect();
-    const x = ((event.clientX - bounds.left) / bounds.width) * 100;
-    const y = ((event.clientY - bounds.top) / bounds.height) * 100;
-    element.style.setProperty("--pointer-x", `${x}%`);
-    element.style.setProperty("--pointer-y", `${y}%`);
-  });
-}
-
 function bindProjectGalleries() {
   document.addEventListener("click", (event) => {
     if (!(event.target instanceof Element)) {
+      return;
+    }
+
+    const zoom = event.target.closest("[data-gallery-zoom]");
+    if (zoom) {
+      const zoomGallery = zoom.closest("[data-project-gallery]");
+      if (zoomGallery) {
+        openProjectLightbox(zoomGallery);
+      }
       return;
     }
 
@@ -194,6 +171,9 @@ function bindProjectGalleries() {
 
     mainImage.src = selected.dataset.src;
     mainImage.alt = selected.dataset.alt || "";
+    mainImage.classList.remove("is-swapping");
+    void mainImage.offsetWidth;
+    mainImage.classList.add("is-swapping");
     images.forEach((image, index) => {
       const isSelected = index === nextIndex;
       image.setAttribute("aria-pressed", String(isSelected));
@@ -203,6 +183,123 @@ function bindProjectGalleries() {
       counter.textContent = `${nextIndex + 1} / ${images.length}`;
     }
   });
+}
+
+function bindProjectLightbox() {
+  const overlay = document.getElementById("project-lightbox");
+  if (!overlay) {
+    return;
+  }
+
+  overlay.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) {
+      return;
+    }
+
+    if (event.target === overlay || event.target.closest("[data-lightbox-close]")) {
+      closeProjectLightbox();
+      return;
+    }
+
+    const step = event.target.closest("[data-lightbox-step]");
+    if (step) {
+      stepProjectLightbox(Number(step.dataset.lightboxStep));
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (overlay.hidden) {
+      return;
+    }
+
+    if (event.key === "Escape") {
+      closeProjectLightbox();
+    } else if (event.key === "ArrowRight") {
+      stepProjectLightbox(1);
+    } else if (event.key === "ArrowLeft") {
+      stepProjectLightbox(-1);
+    }
+  });
+}
+
+function openProjectLightbox(gallery) {
+  const overlay = document.getElementById("project-lightbox");
+  const thumbnails = [...gallery.querySelectorAll("[data-gallery-index]")];
+  if (!overlay || !thumbnails.length) {
+    return;
+  }
+
+  state.lightbox.images = thumbnails.map((thumb) => ({
+    src: thumb.dataset.src,
+    alt: thumb.dataset.alt || "",
+  }));
+  state.lightbox.title =
+    gallery.closest(".project-card")?.querySelector("h3")?.textContent.trim() || "";
+  state.lightbox.opener = gallery.querySelector("[data-gallery-zoom]");
+
+  const activeIndex = thumbnails.findIndex(
+    (thumb) => thumb.getAttribute("aria-pressed") === "true"
+  );
+  setProjectLightboxIndex(activeIndex >= 0 ? activeIndex : 0);
+
+  overlay.querySelector("[data-lightbox-close]")?.setAttribute(
+    "aria-label",
+    state.lang === "fa" ? "بستن" : "Close"
+  );
+  overlay.querySelector('[data-lightbox-step="-1"]')?.setAttribute(
+    "aria-label",
+    state.lang === "fa" ? "تصویر قبلی" : "Previous image"
+  );
+  overlay.querySelector('[data-lightbox-step="1"]')?.setAttribute(
+    "aria-label",
+    state.lang === "fa" ? "تصویر بعدی" : "Next image"
+  );
+
+  overlay.hidden = false;
+  document.body.classList.add("lightbox-open");
+  overlay.querySelector("[data-lightbox-close]")?.focus();
+}
+
+function setProjectLightboxIndex(index) {
+  const { images } = state.lightbox;
+  if (!images.length) {
+    return;
+  }
+
+  const nextIndex = ((index % images.length) + images.length) % images.length;
+  state.lightbox.index = nextIndex;
+  const image = images[nextIndex];
+  const preview = document.getElementById("lightbox-image");
+  const caption = document.getElementById("lightbox-caption");
+
+  if (preview) {
+    preview.src = image.src;
+    preview.alt = image.alt;
+  }
+  if (caption) {
+    caption.textContent = `${state.lightbox.title} · ${nextIndex + 1} / ${images.length}`;
+  }
+}
+
+function stepProjectLightbox(step) {
+  if (!state.lightbox.images.length) {
+    return;
+  }
+
+  setProjectLightboxIndex(state.lightbox.index + step);
+}
+
+function closeProjectLightbox() {
+  const overlay = document.getElementById("project-lightbox");
+  if (!overlay || overlay.hidden) {
+    return;
+  }
+
+  overlay.hidden = true;
+  document.body.classList.remove("lightbox-open");
+  state.lightbox.opener?.focus();
+  state.lightbox.images = [];
+  state.lightbox.opener = null;
 }
 
 function bindContactForm() {
@@ -235,20 +332,21 @@ function bindContactForm() {
 }
 
 async function setLanguage(lang) {
-  const nextLanguage = lang === "en" ? "en" : "fa";
-  if (state.data && nextLanguage === state.lang) {
+  if (state.data && lang === state.lang) {
     return;
   }
 
   const requestId = ++state.languageRequestId;
-  const data = await loadPortfolioData(nextLanguage);
+  const data = await loadPortfolioData(lang);
   if (requestId !== state.languageRequestId) {
     return;
   }
 
   state.data = data;
-  state.lang = nextLanguage;
+  state.lang = lang;
   const direction = state.lang === "fa" ? "rtl" : "ltr";
+
+  closeProjectLightbox();
 
   document.documentElement.lang = state.lang;
   document.documentElement.dir = direction;
@@ -302,7 +400,7 @@ function renderMeta() {
 
   document.title = pageTitle;
   setMetaContent('meta[name="description"]', pageDescription);
-  setMetaContent('meta[name="keywords"]', state.data.seo.keywords);
+  setMetaContent('meta[name="keywords"]', site.keywords);
   setMetaContent('meta[property="og:title"]', pageTitle);
   setMetaContent('meta[property="og:description"]', pageDescription);
 }
@@ -312,38 +410,33 @@ function renderBrand() {
   setText("#brand-name", site.name);
   setText("#brand-role", site.brandRole);
 
+  const resumeSizes = state.data.resumeSizes || {};
   const resumeLinks = [
     {
       element: document.getElementById("resume-full-link"),
       href: site.resumeFullUrl,
-      label: state.lang === "fa" ? "نسخه کامل" : "Full size",
-      size: "5.2 MB",
-      description: state.lang === "fa" ? "دانلود رزومه کامل، ۵٫۲ مگابایت" : "Download full-size resume, 5.2 MB",
+      label: site.resumeFullLabel,
+      size: resumeSizes.full,
     },
     {
       element: document.getElementById("resume-eco-link"),
       href: site.resumeEcoUrl,
-      label: state.lang === "fa" ? "نسخه کم‌حجم" : "Eco",
-      size: "1.7 MB",
-      description: state.lang === "fa" ? "دانلود رزومه کم‌حجم، ۱٫۷ مگابایت" : "Download eco resume, 1.7 MB",
+      label: site.resumeEcoLabel,
+      size: resumeSizes.eco,
     },
   ];
 
-  setText("#resume-trigger-label", state.lang === "fa" ? "دریافت رزومه" : "Get CV");
-  document.getElementById("resume-options")?.setAttribute(
-    "aria-label",
-    state.lang === "fa" ? "انتخاب نسخه رزومه" : "Choose a resume version"
-  );
+  setText("#resume-trigger-label", site.resumeTrigger);
 
-  resumeLinks.forEach(({ element, href, label, size, description }) => {
+  resumeLinks.forEach(({ element, href, label, size }) => {
     if (!element || !href) {
       return;
     }
 
     element.href = href;
-    element.setAttribute("aria-label", description);
+    element.setAttribute("aria-label", size ? `${label} (${size})` : label);
     element.querySelector(".resume-link-label").textContent = label;
-    element.querySelector(".resume-size").textContent = size;
+    element.querySelector(".resume-size").textContent = size || "";
   });
 }
 
@@ -358,7 +451,7 @@ function renderNavigation() {
     .map(
       (item) => `
         <a class="nav-link" href="#${item.id}" data-section="${item.id}">
-          ${item.label}
+          ${escapeHtml(item.label)}
         </a>
       `
     )
@@ -378,13 +471,13 @@ function renderHero() {
   const primaryButton = document.getElementById("hero-primary-action");
   const secondaryButton = document.getElementById("hero-secondary-action");
   if (primaryButton) {
-    primaryButton.textContent = hero.buttons.primary;
+    primaryButton.textContent = hero.buttons.project;
   }
   if (secondaryButton) {
-    secondaryButton.textContent = hero.buttons.secondary;
+    secondaryButton.textContent = hero.buttons.hire;
   }
 
-  setContainerHTML(
+  setHTML(
     "#hero-badges",
     hero.badges.map((badge) => renderHeroBadge(badge, age)).join("")
   );
@@ -398,53 +491,52 @@ function renderSidebar() {
   }
 
   const sidebar = state.data.sidebar;
-  const capabilities = state.data.sidebar.capabilities;
+  const stack = state.data.stack || {};
+  const softSkills = (sidebar.softSkills || []).filter((skill) => String(skill).trim());
+  const languages = (sidebar.languages || []).filter((language) => language && language.name);
+
+  const stackSection = (className, title, items) =>
+    items && items.length
+      ? `
+      <section class="sidebar-card ${className}">
+        <h3>${escapeHtml(title)}</h3>
+        <div class="stack-list">
+          ${items.filter((item) => item && item.name).map(renderStackItem).join("")}
+        </div>
+      </section>
+    `
+      : "";
 
   sidebarContent.innerHTML = `
     <div class="sidebar-column-group">
       <section class="sidebar-card sidebar-card--contact">
-        <h3>${sidebar.contactTitle}</h3>
+        <h3>${escapeHtml(sidebar.contactTitle)}</h3>
         <div class="contact-list">
-          ${sidebar.contacts.map(renderContactItem).join("")}
+          ${renderContactList(sidebar, state.data.site)}
         </div>
       </section>
 
-      <section class="sidebar-card sidebar-card--skills">
-        <h3>${sidebar.softSkillsTitle}</h3>
-        <div class="skill-chip-list">
-          ${sidebar.softSkills
-            .map((skill) => `<span class="skill-chip">${skill}</span>`)
-            .join("")}
-        </div>
-      </section>
+      ${softSkills.length
+        ? `<section class="sidebar-card sidebar-card--skills">
+            <h3>${escapeHtml(sidebar.softSkillsTitle)}</h3>
+            <div class="skill-chip-list">
+              ${softSkills.map((skill) => `<span class="skill-chip">${escapeHtml(skill)}</span>`).join("")}
+            </div>
+          </section>`
+        : ""}
 
-      <section class="sidebar-card sidebar-card--languages">
-        <h3>${sidebar.languagesTitle}</h3>
-        <div class="language-card">
-          ${sidebar.languages.map((language) => renderLanguageBlock(language)).join("")}
-        </div>
-      </section>
+      ${languages.length
+        ? `<section class="sidebar-card sidebar-card--languages">
+            <h3>${escapeHtml(sidebar.languagesTitle)}</h3>
+            <div class="language-card">
+              ${languages.map((language) => renderLanguageBlock(language)).join("")}
+            </div>
+          </section>`
+        : ""}
 
-      <section class="sidebar-card sidebar-card--programming">
-        <h3>${sidebar.programmingTitle}</h3>
-        <div class="stack-list">
-          ${capabilities.programming.map(renderStackItem).join("")}
-        </div>
-      </section>
-
-      <section class="sidebar-card sidebar-card--tools">
-        <h3>${sidebar.toolsTitle}</h3>
-        <div class="stack-list">
-          ${capabilities.tools.map(renderStackItem).join("")}
-        </div>
-      </section>
-
-      <section class="sidebar-card sidebar-card--systems">
-        <h3>${sidebar.systemsTitle}</h3>
-        <div class="stack-list">
-          ${capabilities.systems.map(renderStackItem).join("")}
-        </div>
-      </section>
+      ${stackSection("sidebar-card--programming", sidebar.programmingTitle, stack.programming)}
+      ${stackSection("sidebar-card--tools", sidebar.toolsTitle, stack.tools)}
+      ${stackSection("sidebar-card--systems", sidebar.systemsTitle, stack.systems)}
     </div>
   `;
 }
@@ -467,12 +559,12 @@ function renderEducation() {
           <div class="education-card">
             <span class="education-index" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
             <div class="education-card-main">
-              <span class="education-date">${item.start} <span aria-hidden="true">→</span> ${item.end}</span>
-              <h3>${item.degree}</h3>
-              <p>${item.place}</p>
+              <span class="education-date">${escapeHtml(item.start)} <span aria-hidden="true">→</span> ${escapeHtml(item.end)}</span>
+              <h3>${escapeHtml(item.degree)}</h3>
+              <p>${escapeHtml(item.place)}</p>
               <div class="education-meta">
-                <span>${item.status}</span>
-                <span>${item.grade}</span>
+                <span>${escapeHtml(item.status)}</span>
+                <span>${escapeHtml(item.grade)}</span>
               </div>
             </div>
           </div>
@@ -480,6 +572,59 @@ function renderEducation() {
       `
     )
     .join("");
+}
+
+function isCurrentRole(item) {
+  const end = String(item.end_at || "").trim();
+  return !end || /present|now|current|ongoing|اکنون|کنون/i.test(end);
+}
+
+function renderEmploymentCard(item, variant) {
+  const details = (item.list_of_details || []).filter((line) => String(line).trim());
+  const organization = String(item.organization_name || "").trim();
+  const icon = String(item.organization_icon || "").trim();
+  const range = [item.start_at, item.end_at].filter((value) => String(value || "").trim());
+  const showDetails = variant === "current" && details.length;
+
+  return `
+    <article class="employment-card employment-card--${variant}">
+      <div class="timeline-card">
+        <div class="timeline-top">
+          ${
+            icon
+              ? `<span class="timeline-logo"><img src="assets/img/${escapeHtml(
+                  icon
+                )}" alt="" loading="lazy" decoding="async"></span>`
+              : ""
+          }
+          <div class="timeline-org">
+            ${organization ? `<strong>${escapeHtml(organization)}</strong>` : ""}
+            ${item.emp_type ? `<span class="timeline-type">${escapeHtml(item.emp_type)}</span>` : ""}
+          </div>
+        </div>
+        ${
+          range.length
+            ? `<span class="timeline-range">
+                ${range
+                  .map((value) => `<span>${escapeHtml(value)}</span>`)
+                  .join('<i aria-hidden="true">\u2192</i>')}
+              </span>`
+            : ""
+        }
+        <div class="timeline-title-block">
+          <h3>${escapeHtml(item.title)}</h3>
+          ${item.sub_title ? `<p class="timeline-subtitle">${escapeHtml(item.sub_title)}</p>` : ""}
+        </div>
+        ${
+          showDetails
+            ? `<ul class="timeline-details">
+                ${details.map((line) => `<li>${escapeHtml(line)}</li>`).join("")}
+              </ul>`
+            : ""
+        }
+      </div>
+    </article>
+  `;
 }
 
 function renderEmployment() {
@@ -493,141 +638,28 @@ function renderEmployment() {
   setText("#employment-title", section.title);
   setText("#employment-description", section.description);
 
-  list.innerHTML = section.items
-    .map(
-      (item, index) => {
-        const row = Math.floor(index / 2);
-        const isLeft = row % 2 === 0 ? index % 2 === 0 : index % 2 !== 0;
-        return `
-        <article class="timeline-entry ${isLeft ? "timeline-entry--left" : "timeline-entry--right"}">
-          <div class="timeline-card">
-            <span class="timeline-date">${item.date}</span>
-            <div class="timeline-card-heading">
-              <h3>${item.title}</h3>
-              <p class="timeline-subtitle">${item.subtitle}</p>
-            </div>
-            <div class="timeline-lines">
-              ${item.lines.map((line) => `<span>${line}</span>`).join("")}
-            </div>
-          </div>
-        </article>
-      `;
-      }
-    )
-    .join("");
-  scheduleEmploymentPath();
-}
+  const items = section.items || [];
+  const current = items.filter(isCurrentRole);
+  const archived = items.filter((item) => !isCurrentRole(item));
 
-function scheduleEmploymentPath() {
-  cancelAnimationFrame(employmentPathFrame);
-  employmentPathFrame = requestAnimationFrame(drawEmploymentPath);
-}
-
-function drawEmploymentPath() {
-  const timeline = document.getElementById("employment-list");
-  if (!timeline) {
-    return;
-  }
-
-  const entries = [...timeline.querySelectorAll(".timeline-entry")];
-  if (entries.length < 2) {
-    return;
-  }
-
-  let svg = timeline.querySelector(".timeline-path");
-  if (!svg) {
-    svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.classList.add("timeline-path");
-    svg.setAttribute("aria-hidden", "true");
-    timeline.prepend(svg);
-  }
-
-  const bounds = timeline.getBoundingClientRect();
-  const width = bounds.width;
-  const height = bounds.height;
-  if (!width || !height) {
-    return;
-  }
-  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
-  svg.setAttribute("width", String(width));
-  svg.setAttribute("height", String(height));
-  const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-  const marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
-  marker.setAttribute("id", "employment-arrow");
-  marker.setAttribute("viewBox", "0 0 8 8");
-  marker.setAttribute("markerWidth", "8");
-  marker.setAttribute("markerHeight", "8");
-  marker.setAttribute("refX", "7");
-  marker.setAttribute("refY", "4");
-  marker.setAttribute("orient", "auto");
-  marker.setAttribute("markerUnits", "userSpaceOnUse");
-  const arrowHead = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  arrowHead.setAttribute("d", "M 1 1 L 7 4 L 1 7");
-  arrowHead.setAttribute("class", "timeline-arrow-head");
-  marker.append(arrowHead);
-  defs.append(marker);
-  svg.replaceChildren(defs);
-
-  entries.slice(0, -1).forEach((entry, index) => {
-    const currentCard = entry.querySelector(".timeline-card");
-    const nextCard = entries[index + 1].querySelector(".timeline-card");
-    if (!currentCard || !nextCard) {
-      return;
+  list.innerHTML = `
+    ${
+      current.length
+        ? `<div class="employment-current">
+            ${current.map((item) => renderEmploymentCard(item, "current")).join("")}
+          </div>`
+        : ""
     }
-
-    const currentRect = currentCard.getBoundingClientRect();
-    const nextRect = nextCard.getBoundingClientRect();
-    const current = {
-      left: currentRect.left - bounds.left,
-      top: currentRect.top - bounds.top,
-      width: currentRect.width,
-      height: currentRect.height,
-      right: currentRect.right - bounds.left,
-    };
-    const next = {
-      left: nextRect.left - bounds.left,
-      top: nextRect.top - bounds.top,
-      width: nextRect.width,
-      height: nextRect.height,
-      right: nextRect.right - bounds.left,
-    };
-    const sameRow = Math.abs(current.top - next.top) < 2;
-    const isMobile = window.matchMedia("(max-width: 700px)").matches;
-    const start = isMobile
-      ? {
-            x: current.left + current.width / 2,
-            y: current.top + current.height,
-        }
-      : sameRow
-        ? {
-              x: current.left < next.left ? current.right : current.left,
-              y: current.top + current.height / 2,
-          }
-        : {
-              x: current.left + current.width / 2,
-              y: current.top + current.height,
-          };
-    const end = isMobile
-      ? {
-            x: next.left + next.width / 2,
-            y: next.top,
-        }
-      : sameRow
-        ? {
-              x: current.left < next.left ? next.left : next.right,
-              y: next.top + next.height / 2,
-          }
-        : {
-              x: next.left + next.width / 2,
-              y: next.top,
-          };
-
-    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    path.setAttribute("d", `M ${start.x} ${start.y} L ${end.x} ${end.y}`);
-    path.setAttribute("class", "timeline-connection");
-    path.setAttribute("marker-end", "url(#employment-arrow)");
-    svg.append(path);
-  });
+    ${
+      archived.length
+        ? `<div class="employment-archive">
+            <div class="employment-track">
+              ${archived.map((item) => renderEmploymentCard(item, "archive")).join("")}
+            </div>
+          </div>`
+        : ""
+    }
+  `;
 }
 
 function renderProjects() {
@@ -645,14 +677,21 @@ function renderProjects() {
     .map(
       (item) => `
         <article class="project-entry">
+          <span class="project-date-mark" aria-hidden="true">${escapeHtml(item.date)}</span>
           <div class="project-card">
-            <span class="project-date">${item.date}</span>
             <div class="project-card-layout">
               ${renderProjectGallery(item)}
               <div class="project-card-body">
-                <h3>${item.title}</h3>
-                <span class="project-role">${item.role}</span>
-                <p>${item.summary}</p>
+                ${
+                  item.role
+                    ? `<div class="project-meta">
+                        <span class="project-role">${escapeHtml(item.role)}</span>
+                      </div>`
+                    : ""
+                }
+                <h3>${escapeHtml(item.title)}</h3>
+                <p class="project-summary">${escapeHtml(item.summary)}</p>
+                ${renderProjectTech(item)}
               </div>
             </div>
           </div>
@@ -663,39 +702,100 @@ function renderProjects() {
 }
 
 function renderProjectGallery(item) {
-  const gallery = item.gallery?.length
-    ? item.gallery
-    : [item.image.replace(/\.png$/i, ".webp")];
+  const gallery = (state.data.projectGalleries?.[item.key] || []).filter(
+    (image) => typeof image === "string" && image.trim()
+  );
   const label = state.lang === "fa" ? "تصاویر پروژه" : "Project images";
   const previous = state.lang === "fa" ? "تصویر قبلی" : "Previous image";
   const next = state.lang === "fa" ? "تصویر بعدی" : "Next image";
+  const zoomLabel = state.lang === "fa" ? "نمایش تمام صفحه" : "View image full screen";
+
+  if (!gallery.length) {
+    return "";
+  }
 
   return `
     <div class="project-gallery" data-project-gallery>
       <div class="gallery-stage">
-        <img data-gallery-main src="assets/img/${gallery[0]}" alt="${item.title} 1" loading="lazy" decoding="async">
+        <img data-gallery-main src="assets/img/${escapeHtml(gallery[0])}" alt="${escapeHtml(
+    item.title
+  )} 1" loading="lazy" decoding="async">
         <span class="gallery-counter" data-gallery-counter aria-live="polite">1 / ${gallery.length}</span>
+        <button class="gallery-arrow gallery-arrow--prev" type="button" data-gallery-step="-1"
+          aria-label="${previous}">&lsaquo;</button>
+        <button class="gallery-arrow gallery-arrow--next" type="button" data-gallery-step="1"
+          aria-label="${next}">&rsaquo;</button>
+        <button class="gallery-zoom" type="button" data-gallery-zoom
+          aria-label="${zoomLabel}"></button>
       </div>
-      <div class="gallery-navigation">
-        <button class="gallery-arrow" type="button" data-gallery-step="-1" aria-label="${previous}">‹</button>
-        <div class="gallery-thumbnails" role="group" aria-label="${label}">
-          ${gallery
-            .map(
-              (image, index) => `
-                <button class="gallery-thumbnail${index === 0 ? " is-active" : ""}" type="button"
-                    data-gallery-index="${index}" data-src="assets/img/${image}"
-                    data-alt="${item.title} ${index + 1}" aria-label="${item.title} ${index + 1}"
-                    aria-pressed="${index === 0}">
-                  <img src="assets/img/${image}" alt="" loading="lazy" decoding="async">
-                </button>
-              `
-            )
-            .join("")}
-        </div>
-        <button class="gallery-arrow" type="button" data-gallery-step="1" aria-label="${next}">›</button>
+      <div class="gallery-thumbnails" role="group" aria-label="${escapeHtml(label)}">
+        ${gallery
+          .map(
+            (image, index) => `
+              <button class="gallery-thumbnail${index === 0 ? " is-active" : ""}" type="button"
+                  data-gallery-index="${index}" data-src="assets/img/${escapeHtml(image)}"
+                  data-alt="${escapeHtml(item.title)} ${index + 1}" aria-label="${escapeHtml(item.title)} ${
+              index + 1
+            }"
+                  aria-pressed="${index === 0}">
+                <img src="assets/img/${escapeHtml(image)}" alt="" loading="lazy" decoding="async">
+              </button>
+            `
+          )
+          .join("")}
       </div>
     </div>
   `;
+}
+
+function renderProjectTech(item) {
+  const tools = Array.isArray(item.tools)
+    ? item.tools.filter((entry) => typeof entry === "string" && entry.trim())
+    : [];
+  if (!tools.length) {
+    return "";
+  }
+
+  const label = state.lang === "fa" ? "ابزارها و زبان ها" : "Tools & languages";
+
+  return `
+    <div class="project-tools">
+      <span class="project-tools-label">${label}</span>
+      <ul class="project-tech">
+        ${tools.map((entry) => renderProjectToolChip(entry)).join("")}
+      </ul>
+    </div>
+  `;
+}
+
+function renderProjectToolChip(entry) {
+  const stackEntry = stackIconIndex().get(String(entry).trim().toLowerCase());
+  const icon = stackEntry && typeof stackEntry.icon === "string" ? stackEntry.icon.trim() : "";
+
+  return `<li class="project-tech-item">${
+    icon
+      ? `<img src="assets/img/${escapeHtml(icon)}" alt="" loading="lazy" decoding="async">`
+      : ""
+  }<span>${escapeHtml(entry)}</span></li>`;
+}
+
+function stackIconIndex() {
+  const index = new Map();
+
+  Object.values(state.data.stack || {}).forEach((group) => {
+    if (!Array.isArray(group)) {
+      return;
+    }
+    group.forEach((entry) => {
+      const name =
+        entry && typeof entry.name === "string" ? entry.name.trim().toLowerCase() : "";
+      if (name) {
+        index.set(name, entry);
+      }
+    });
+  });
+
+  return index;
 }
 
 function renderContact() {
@@ -704,19 +804,25 @@ function renderContact() {
   setText("#contact-kicker", section.kicker);
   setText("#contact-title", section.title);
   setText("#contact-description", section.description);
-  setContainerHTML(
+  const contacts = contactEntries(state.data.sidebar, state.data.site);
+  setHTML(
     "#contact-actions",
-    section.actions
-      .map(
-        (action) => `
-          <a class="contact-link" href="${action.href}" ${
-            action.href.startsWith("http") ? 'target="_blank" rel="noopener"' : ""
+    (section.actions || [])
+      .map((action) => {
+        const entry = contacts.find((contact) => contact.key === action.key);
+        if (!entry) {
+          return "";
+        }
+
+        return `
+          <a class="contact-link" href="${escapeHtml(entry.href)}" ${
+            entry.href.startsWith("http") ? 'target="_blank" rel="noopener"' : ""
           }>
-            <img src="assets/img/${action.icon}" alt="${action.label}">
-            <span>${action.label}</span>
+            ${entry.icon ? `<img src="assets/img/${escapeHtml(entry.icon)}" alt="${escapeHtml(action.label)}">` : ""}
+            <span>${escapeHtml(action.label)}</span>
           </a>
-        `
-      )
+        `;
+      })
       .join("")
   );
 
@@ -737,29 +843,22 @@ function initRevealObserver() {
   state.revealObserver?.disconnect();
 
   const revealTargets = document.querySelectorAll(
-    ".section-heading, .education-item, .timeline-entry, .project-entry, .sidebar-card, .contact-copy, .contact-card"
+    ".section-heading, .education-item, .employment-card, .project-entry, .sidebar-card, .contact-copy, .contact-card"
   );
   revealTargets.forEach((element) => element.classList.add("reveal-ready"));
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (!("IntersectionObserver" in window) || prefersReducedMotion) {
+  if (!("IntersectionObserver" in window)) {
     revealTargets.forEach((element) => element.classList.add("is-visible"));
-    drawEmploymentPath();
     return;
   }
 
   state.revealObserver = new IntersectionObserver(
     (entries, observer) => {
-      let employmentChanged = false;
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("is-visible");
-          employmentChanged = employmentChanged || entry.target.classList.contains("timeline-entry");
           observer.unobserve(entry.target);
         }
       });
-      if (employmentChanged) {
-        scheduleEmploymentPath();
-      }
     },
     { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
   );
@@ -903,12 +1002,28 @@ function initSectionObserver() {
 }
 
 function buildHeroTitle() {
-  return [state.data.hero.title.slice(0, 2), state.data.hero.title.slice(2)]
+  const title = state.data.hero.title || {};
+  const rows = [
+    [
+      { text: title.starter, className: "hero-title-small" },
+      { text: title.first, className: "hero-title-big" },
+    ],
+    [
+      { text: title.last, className: "hero-title-medium" },
+      { text: title.ender, className: "hero-title-small" },
+    ],
+  ];
+
+  return rows
     .map(
       (row) => `
         <span class="hero-title-row">
           ${row
-            .map((line) => `<span class="hero-title-line ${line.className}">${line.text}</span>`)
+            .filter((line) => String(line.text ?? "").trim())
+            .map(
+              (line) =>
+                `<span class="hero-title-line ${line.className}">${escapeHtml(line.text)}</span>`
+            )
             .join("")}
         </span>
       `
@@ -917,36 +1032,67 @@ function buildHeroTitle() {
 }
 
 function renderHeroBadge(badge, age) {
-  const label = (badge.text || badge.label || badge.value || "")
-    .replace("{age}", age)
-    .trim();
+  const label = String(badge.text || "").replace("{age}", age).trim();
+  if (!label) {
+    return "";
+  }
+
+  const dot = `<i class="badge-dot" aria-hidden="true"></i>`;
 
   if (badge.icon) {
     return `
       <div class="hero-badge">
-        <img src="assets/img/${badge.icon}" alt="" aria-hidden="true">
-        <span>${label}</span>
+        ${dot}
+        <img src="assets/img/${escapeHtml(badge.icon)}" alt="" aria-hidden="true">
+        <span>${escapeHtml(label)}</span>
       </div>
     `;
   }
 
-  return `<div class="hero-badge">${label}</div>`;
+  return `<div class="hero-badge">${dot}<span>${escapeHtml(label)}</span></div>`;
 }
 
-function renderContactItem(item) {
-  return `
-    <div class="contact-item">
-      <div class="contact-icon-wrap">
-        <img src="assets/img/${item.icon}" alt="" aria-hidden="true">
-      </div>
-      <div>
-        <span>${item.label}</span>
-        <a href="${item.href}" ${
-          item.href.startsWith("http") ? 'target="_blank" rel="noopener"' : ""
-        }>${item.value}</a>
-      </div>
-    </div>
-  `;
+function contactEntries(sidebar, site) {
+  const labels = sidebar.contactLabels || {};
+  const icons = state.data.contactIcons || {};
+  const handle = (url) => `@${String(url).split("/").filter(Boolean).pop()}`;
+
+  return [
+    { key: "email", value: site.email, href: site.email ? `mailto:${site.email}` : "" },
+    {
+      key: "phone",
+      value: site.phone,
+      href: site.phone ? `tel:${String(site.phone).replace(/[^\d+]/g, "")}` : "",
+    },
+    { key: "github", value: site.github ? handle(site.github) : "", href: site.github },
+    { key: "linkedin", value: site.linkedin ? handle(site.linkedin) : "", href: site.linkedin },
+  ]
+    .filter((entry) => entry.value && entry.href)
+    .map((entry) => ({
+      ...entry,
+      label: labels[entry.key] || entry.key,
+      icon: icons[entry.key] || "",
+    }));
+}
+
+function renderContactList(sidebar, site) {
+  return contactEntries(sidebar, site)
+    .map(
+      (item) => `
+        <div class="contact-item">
+          <div class="contact-icon-wrap">
+            ${item.icon ? `<img src="assets/img/${escapeHtml(item.icon)}" alt="" aria-hidden="true">` : ""}
+          </div>
+          <div>
+            <span>${escapeHtml(item.label)}</span>
+            <a href="${escapeHtml(item.href)}" ${
+              item.href.startsWith("http") ? 'target="_blank" rel="noopener"' : ""
+            }>${escapeHtml(item.value)}</a>
+          </div>
+        </div>
+      `
+    )
+    .join("");
 }
 
 function renderLanguageBlock(language) {
@@ -957,9 +1103,9 @@ function renderLanguageBlock(language) {
           .map(
             (detail) => `
               <div class="detail-row">
-                <span>${detail.label}</span>
-                <div class="progress"><span style="width: ${detail.value}%;"></span></div>
-                <span>${detail.value}%</span>
+                <span>${escapeHtml(detail.label)}</span>
+                <div class="progress"><span style="width: ${escapeHtml(detail.value)}%;"></span></div>
+                <span>${escapeHtml(detail.value)}%</span>
               </div>
             `
           )
@@ -971,11 +1117,11 @@ function renderLanguageBlock(language) {
   return `
     <div class="language-block">
       <div class="language-head">
-        <strong>${language.name}</strong>
-        <span class="language-level">${language.level}</span>
-        <span class="language-value">${language.value}%</span>
+        <strong>${escapeHtml(language.name)}</strong>
+        <span class="language-level">${escapeHtml(language.level)}</span>
+        <span class="language-value">${escapeHtml(language.value)}%</span>
       </div>
-      <div class="progress"><span style="width: ${language.value}%;"></span></div>
+      <div class="progress"><span style="width: ${escapeHtml(language.value)}%;"></span></div>
       ${details}
     </div>
   `;
@@ -985,17 +1131,26 @@ function renderStackItem(item) {
   return `
     <div class="stack-group">
       <div class="stack-item">
-        <img src="assets/img/${item.icon}" alt="${item.name}">
+        <img src="assets/img/${escapeHtml(item.icon)}" alt="${escapeHtml(item.name)}">
         <div class="stack-meta">
           <div class="stack-name-row">
-            <strong>${item.name}</strong>
-            <span>${item.value}%</span>
+            <strong>${escapeHtml(item.name)}</strong>
+            <span>${escapeHtml(item.value)}%</span>
           </div>
-          <div class="progress"><span style="width: ${item.value}%;"></span></div>
+          <div class="progress"><span style="width: ${escapeHtml(item.value)}%;"></span></div>
         </div>
       </div>
     </div>
   `;
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 function calculateAge(birthDate) {
@@ -1032,10 +1187,6 @@ function setHTML(selector, value) {
   if (element) {
     element.innerHTML = value;
   }
-}
-
-function setContainerHTML(selector, value) {
-  setHTML(selector, value);
 }
 
 function setPlaceholder(selector, value) {

@@ -2,10 +2,11 @@
   "site": {
     "name": "Amir Hossein Rahimian",
     "brandRole": "Android Developer / UI UX Designer",
-    "location": "Yazd, Iran"
-  },
-  "seo": {
-    "keywords": "Amir Rahimian, Portfolio, Android Developer, UI UX Designer, Yazd"
+    "location": "Yazd, Iran",
+    "keywords": "Amir Rahimian, Portfolio, Android Developer, UI UX Designer, Yazd",
+    "resumeTrigger": "download",
+    "resumeFullLabel": "Full size",
+    "resumeEcoLabel": "Eco"
   },
   "nav": [
     {
@@ -25,85 +26,48 @@
     "kicker": "Portfolio",
     "role": "Android Developer, UI/UX Designer, AI Student",
     "summary": "I design and build mobile products, from thoughtful interfaces to Android apps. I also explore AI and connected devices.",
-    "facts": [
-      "Based in Yazd, Iran",
-      "Mobile apps and product design",
-      "AI and connected-device projects"
-    ],
     "buttons": {
-      "primary": "See Projects",
-      "secondary": "Hire Me"
+      "project": "See Projects",
+      "hire": "Hire Me"
     },
     "badges": [
       {
-        "text": "YAZD, IRAN"
+        "text": "YAZD, IRAN",
+        "icon": ""
       },
       {
-        "text": "ANDROID"
+        "text": "ANDROID",
+        "icon": ""
       },
       {
-        "text": "UI / UX"
+        "text": "UI / UX",
+        "icon": "figma.svg"
       },
       {
-        "text": "AI"
+        "text": "AI",
+        "icon": ""
       },
       {
-        "text": "{age} YEARS OLD"
+        "text": "{age} YEARS OLD",
+        "icon": ""
       }
     ],
-    "title": [
-      {
-        "text": "I am",
-        "className": "hero-title-small"
-      },
-      {
-        "text": "AmirHossein",
-        "className": "hero-title-big"
-      },
-      {
-        "text": "Rahimian",
-        "className": "hero-title-medium"
-      },
-      {
-        "text": "Aliabad",
-        "className": "hero-title-small"
-      }
-    ]
+    "title": {
+      "starter": "I am",
+      "first": "AmirHossein",
+      "last": "Rahimian",
+      "ender": "Aliabad"
+    }
   },
   "sidebar": {
     "contactTitle": "Contact Info",
+    "contactLabels": {
+      "email": "Email",
+      "phone": "Phone",
+      "github": "GitHub",
+      "linkedin": "LinkedIn"
+    },
     "softSkillsTitle": "Skills",
-    "languagesTitle": "Languages",
-    "programmingTitle": "Programming Languages",
-    "toolsTitle": "Tools",
-    "systemsTitle": "Operating Systems",
-    "languageStatsLabel": "Details",
-    "contacts": [
-      {
-        "label": "Email",
-        "value": "amirrahimian2@gmail.com",
-        "href": "mailto:amirrahimian2@gmail.com",
-        "icon": "email.svg"
-      },
-      {
-        "label": "Phone",
-        "value": "+98 921 987 2447",
-        "href": "tel:+989219872447",
-        "icon": "phone.svg"
-      },
-      {
-        "label": "GitHub",
-        "value": "@amir-rahimian",
-        "href": "https://github.com/amir-rahimian",
-        "icon": "github.svg"
-      },
-      {
-        "label": "LinkedIn",
-        "value": "@amirrahimian",
-        "href": "https://www.linkedin.com/in/amirrahimian",
-        "icon": "linkedin.svg"
-      }
-    ],
     "softSkills": [
       "Collaboration",
       "Problem solving",
@@ -111,11 +75,12 @@
       "Project planning",
       "Self-directed learning"
     ],
+    "languagesTitle": "Languages",
     "languages": [
       {
         "name": "Persian",
         "level": "Native Language",
-        "value": 100,
+        "value": 99,
         "details": []
       },
       {
@@ -147,7 +112,10 @@
         "value": 0,
         "details": []
       }
-    ]
+    ],
+    "programmingTitle": "Programming Languages",
+    "toolsTitle": "Tools",
+    "systemsTitle": "Operating Systems"
   },
   "education": {
     "kicker": "Academic Path",
@@ -186,67 +154,95 @@
     "description": "Design, Android development, product work, and teaching.",
     "items": [
       {
-        "date": "2015 Jul",
         "title": "Freelancer",
-        "subtitle": "Design",
-        "lines": [
+        "start_at": "2015 Jul",
+        "end_at": "2017 Jun",
+        "sub_title": "Graphic & visual design",
+        "list_of_details": [
           "Logo design, event design, and advertising graphics",
           "Started building a visual design mindset early"
-        ]
+        ],
+        "organization_name": "Self-employed",
+        "organization_icon": "",
+        "emp_type": "Freelance"
       },
       {
-        "date": "2017 Jun",
-        "title": "Freelancer",
-        "subtitle": "UI UX Designer",
-        "lines": [
+        "title": "UI / UX Designer",
+        "start_at": "2017 Jun",
+        "end_at": "2019 Nov",
+        "sub_title": "Freelance product interfaces",
+        "list_of_details": [
           "User interface design",
           "Mobile applications and websites"
-        ]
+        ],
+        "organization_name": "Self-employed",
+        "organization_icon": "",
+        "emp_type": "Freelance"
       },
       {
-        "date": "2018 Aug",
-        "title": "BordBord Startup",
-        "subtitle": "Smart Retail System / 1 Year",
-        "lines": [
-          "UI design",
+        "title": "UI Designer",
+        "start_at": "2018 Aug",
+        "end_at": "2019 Aug",
+        "sub_title": "Smart retail system · 1 year",
+        "list_of_details": [
+          "UI design for the retail platform",
           "Game scenario writing"
-        ]
+        ],
+        "organization_name": "BordBord Startup",
+        "organization_icon": "",
+        "emp_type": "Startup"
       },
       {
-        "date": "2019 Nov",
-        "title": "Freelancer",
-        "subtitle": "Android Developer",
-        "lines": [
+        "title": "Android Developer",
+        "start_at": "2019 Nov",
+        "end_at": "2020 Oct",
+        "sub_title": "Freelance Android applications",
+        "list_of_details": [
           "Java and Android Studio",
           "Built practical mobile interfaces and flows"
-        ]
+        ],
+        "organization_name": "Self-employed",
+        "organization_icon": "git.svg",
+        "emp_type": "Freelance"
       },
       {
-        "date": "2020 Oct",
-        "title": "Unimoon Startup",
-        "subtitle": "Book lending and selling system / 8 Months",
-        "lines": [
+        "title": "Product Designer",
+        "start_at": "2020 Oct",
+        "end_at": "2021 Jun",
+        "sub_title": "Book lending and selling platform · 8 months",
+        "list_of_details": [
           "Ideation and UX",
           "Product direction and interface design"
-        ]
+        ],
+        "organization_name": "Unimoon Startup",
+        "organization_icon": "",
+        "emp_type": "Startup"
       },
       {
-        "date": "2021 Aug",
-        "title": "Lumos",
-        "subtitle": "Part-time Employment",
-        "lines": [
-          "UI Designer, Android Programming, Hardware Programming",
+        "title": "UI Designer & Android Developer",
+        "start_at": "2021 Aug",
+        "end_at": "Present",
+        "sub_title": "Smart home ecosystem",
+        "list_of_details": [
+          "UI design, Android programming, hardware programming",
           "Ongoing work on smart home experiences"
-        ]
+        ],
+        "organization_name": "Lumos",
+        "organization_icon": "",
+        "emp_type": "Part-time"
       },
       {
-        "date": "2023 Oct",
-        "title": "National Skills University",
-        "subtitle": "Android Instructor",
-        "lines": [
-          "Teaching Mobile Programming 1 and 2",
+        "title": "Android Instructor",
+        "start_at": "2023 Oct",
+        "end_at": "Present",
+        "sub_title": "Mobile Programming 1 and 2",
+        "list_of_details": [
+          "Teaching mobile programming foundations",
           "Helping students move from basics to product thinking"
-        ]
+        ],
+        "organization_name": "National Skills University",
+        "organization_icon": "",
+        "emp_type": "Contract"
       }
     ]
   },
@@ -256,44 +252,62 @@
     "description": "A selection of mobile, industrial, and smart-home products.",
     "items": [
       {
+        "key": "unimun",
         "date": "2020 Nov",
-        "title": "دانشگاهمون ؟! / Unimoon Book Platform",
+        "title": "Unimoon Book Platform",
         "role": "UI Designer, Logo Designer",
         "summary": "During university, a startup idea was formed with friends to create a practical platform for buying, selling, lending books, and posting student ads.",
-        "image": "unimunPhoto.png",
-        "gallery": ["unimunPhoto.webp", "unimunMobile.webp", "unimunDesktop.webp"]
+        "tools": [
+          "Figma",
+          "Adobe Xd",
+          "Photoshop",
+          "Illustrator"
+        ]
       },
       {
+        "key": "technoSaf",
         "date": "2021 Aug",
         "title": "Technosaf Light Control",
         "role": "UI Designer, Android Developer",
         "summary": "An industrial mobile interface built to manage lighting panels used for body-wave inspection and production control in a modern workshop setting.",
-        "image": "technoSafPhoto.png",
-        "gallery": ["technoSafPhoto.webp", "technoSafMobile.webp", "technoSafPanel.webp"]
+        "tools": [
+          "Java",
+          "Figma"
+        ]
       },
       {
+        "key": "lumos",
         "date": "2021 Nov",
         "title": "Lumos Smart Home",
         "role": "UI Designer, Logo Designer, Android Developer",
         "summary": "A smart home ecosystem with multiple UI iterations, focused on simple flows, modern controls, and continuous product updates.",
-        "image": "lumosPhoto.png",
-        "gallery": ["lumosPhoto.webp", "lumosMobile.webp", "lumosDashboard.webp"]
+        "tools": [
+          "Java",
+          "Figma",
+          "Illustrator"
+        ]
       },
       {
+        "key": "coloringApp",
         "date": "2022 Oct",
         "title": "Fabric Coloring System",
         "role": "UI Designer, Android Developer",
         "summary": "An industrial interface for a textile color-mixing machine, created for an on-device display with room for future advanced versions.",
-        "image": "coloringAppPhoto.png",
-        "gallery": ["coloringAppPhoto.webp", "coloringAppSettings.webp", "coloringAppMonitor.webp"]
+        "tools": [
+          "Java",
+          "Figma"
+        ]
       },
       {
+        "key": "greenhouse",
         "date": "2023 Jun",
         "title": "Smart Greenhouse",
         "role": "UI Designer, Android Developer",
         "summary": "A control and monitoring experience for an automated greenhouse, designed to simplify environmental management and future analytics.",
-        "image": "greenhousePhoto.png",
-        "gallery": ["greenhousePhoto.webp", "greenhouseOverview.webp", "greenhouseDetails.webp"]
+        "tools": [
+          "Kotlin",
+          "Figma"
+        ]
       }
     ]
   },
@@ -303,19 +317,16 @@
     "description": "I am available for freelance work, product design collaborations, Android development, and focused interface redesign.",
     "actions": [
       {
-        "label": "Email Me",
-        "href": "mailto:amirrahimian2@gmail.com",
-        "icon": "email.svg"
+        "key": "email",
+        "label": "Email Me"
       },
       {
-        "label": "Call Me",
-        "href": "tel:+989219872447",
-        "icon": "phone.svg"
+        "key": "phone",
+        "label": "Call Me"
       },
       {
-        "label": "LinkedIn",
-        "href": "https://www.linkedin.com/in/amirrahimian",
-        "icon": "linkedin.svg"
+        "key": "linkedin",
+        "label": "LinkedIn"
       }
     ],
     "cardLabel": "Hiring Section",

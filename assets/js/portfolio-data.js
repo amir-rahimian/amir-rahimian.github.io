@@ -47,10 +47,10 @@ export async function loadPortfolioData(language) {
 
   return {
     ...localized,
-    site: { ...shared.site, ...localized.site },
-    sidebar: {
-      ...localized.sidebar,
-      capabilities: shared.sidebar.capabilities,
-    },
+    site: { ...localized.site, ...shared.profile },
+    stack: shared.stack,
+    resumeSizes: shared.resumeSizes,
+    contactIcons: shared.contactIcons,
+    projectGalleries: shared.projectGalleries,
   };
 }

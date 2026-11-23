@@ -14,6 +14,8 @@
     <meta property="og:image" content="https://amir-rahimian.github.io/assets/img/portfolioIcon.png">
     <link rel="icon" type="image/webp" href="assets/img/portfolioIcon.webp">
     <link rel="preload" href="assets/img/face.webp" as="image" fetchpriority="high">
+    <link rel="preload" href="assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preconnect" href="https://visitor-badge.laobi.icu" crossorigin>
     <link rel="stylesheet" href="assets/css/style.css">
     <script type="application/ld+json" id="person-schema"></script>
     <script data-goatcounter="https://amirrahimian.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
@@ -45,9 +47,9 @@
                 <div class="topbar-center">
                     <div class="nav-links" id="nav-links"></div>
                 </div>
-                <!-- <img src="https://visitor-badge.laobi.icu/badge?page_id=amir-rahimian&left_text=%E2%80%8C&left_color=%23595959&right_color=%231283c3&logo=github&radius=5&query_only=true" alt="visitor badge" width="72" height="24"/> -->
-                <!-- DO NOT REMOVE NEXT LINE -->
-                <img src="https://visitor-badge.laobi.icu/badge?page_id=amir-rahimian&left_text=%E2%80%8C&left_color=%23595959&right_color=%231283c3&logo=github&radius=5" alt="visitor badge"/>
+                <img src="https://visitor-badge.laobi.icu/badge?page_id=amir-rahimian&left_text=%E2%80%8C&left_color=%23595959&right_color=%231283c3&logo=github&radius=5"
+                    alt="visitor badge" width="72" height="24" loading="lazy" decoding="async"
+                    referrerpolicy="no-referrer">
                 <div class="topbar-actions">
                     <details class="resume-menu" id="resume-menu">
                         <summary class="glass-button primary-button resume-trigger">
@@ -76,14 +78,6 @@
         <main class="page-content" id="main-content">
             <section class="hero-section" id="home">
                 <div class="hero-visual">
-                    <div class="hero-orbits" aria-hidden="true">
-                        <span class="hero-orbit hero-orbit--outer"></span>
-                        <span class="hero-orbit hero-orbit--inner"></span>
-                        <span class="hero-orbit-point"></span>
-                        <span class="hero-sculpture"></span>
-                        <span class="hero-orbit-point hero-orbit-point--second"></span>
-                        <span class="hero-sculpture hero-sculpture--second"></span>
-                    </div>
                     <div class="hero-portrait-frame">
                         <img src="assets/img/face.webp" alt="Amir Hossein Rahimian portrait" class="hero-portrait"
                             id="hero-portrait" fetchpriority="high" decoding="async">
@@ -137,11 +131,11 @@
             </section>
 
             <section class="contact-section" id="contact">
+                <div class="contact-backdrop" aria-hidden="true">
+                    <img src="assets/img/face-animated.webp?v=2" alt="" loading="lazy" decoding="async"
+                        fetchpriority="low">
+                </div>
                 <div class="contact-copy">
-                    <picture class="contact-portrait" aria-hidden="true">
-                        <source srcset="assets/img/face-animated.webp" type="image/webp">
-                        <img src="assets/img/face.gif" alt="" loading="lazy" decoding="async">
-                    </picture>
                     <p class="section-kicker" id="contact-kicker"></p>
                     <h2 id="contact-title"></h2>
                     <p class="section-description" id="contact-description"></p>
@@ -179,6 +173,20 @@
             <p id="footer-copy"></p>
 
         </footer>
+    </div>
+
+    <div class="lightbox" id="project-lightbox" hidden>
+        <div class="lightbox-shell" role="dialog" aria-modal="true" aria-labelledby="lightbox-caption">
+            <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close">×</button>
+            <button class="lightbox-arrow lightbox-arrow--prev" type="button" data-lightbox-step="-1"
+                aria-label="Previous image">‹</button>
+            <figure class="lightbox-figure">
+                <img class="lightbox-image" id="lightbox-image" alt="">
+                <figcaption class="lightbox-caption" id="lightbox-caption"></figcaption>
+            </figure>
+            <button class="lightbox-arrow lightbox-arrow--next" type="button" data-lightbox-step="1"
+                aria-label="Next image">›</button>
+        </div>
     </div>
     <script type="module" src="assets/js/app.js"></script>
 </body>

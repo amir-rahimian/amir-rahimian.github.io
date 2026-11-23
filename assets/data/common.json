@@ -1,82 +1,116 @@
 {
-  "site": {
+  "profile": {
     "email": "amirrahimian2@gmail.com",
     "phone": "+98 921 987 2447",
-    "resumeUrl": "https://drive.google.com/drive/folders/1rk3bnLp-Q2sAakZQo6DRWhu8ZtGcc0aM?usp=sharing",
-    "resumeFullUrl": "https://drive.google.com/file/d/1DyjE5hiW-jejuVtz2r7Mg3BEclLvhYYq/view?usp=sharing",
-    "resumeEcoUrl": "https://drive.google.com/file/d/1XlA1xMRcySDAo5leXl_r-bDjOJMKa1_Y/view?usp=drive_link",
     "birthDate": "2001-05-15",
     "github": "https://github.com/amir-rahimian",
-    "linkedin": "https://www.linkedin.com/in/amirrahimian"
+    "linkedin": "https://www.linkedin.com/in/amirrahimian",
+    "resumeFullUrl": "https://drive.google.com/file/d/1DyjE5hiW-jejuVtz2r7Mg3BEclLvhYYq/view?usp=sharing",
+    "resumeEcoUrl": "https://drive.google.com/file/d/1XlA1xMRcySDAo5leXl_r-bDjOJMKa1_Y/view?usp=drive_link"
   },
-  "sidebar": {
-    "capabilities": {
-      "programming": [
-        {
-          "name": "Java",
-          "value": 90,
-          "icon": "java.svg"
-        },
-        {
-          "name": "Kotlin",
-          "value": 80,
-          "icon": "kotlin.svg"
-        },
-        {
-          "name": "Dart",
-          "value": 90,
-          "icon": "dart.svg"
-        },
-        {
-          "name": "C, C++",
-          "value": 80,
-          "icon": "c++.svg"
-        },
-        {
-          "name": "Python",
-          "value": 50,
-          "icon": "python.svg"
-        }
-      ],
-      "tools": [
-        {
-          "name": "Git",
-          "value": 95,
-          "icon": "git.svg"
-        },
-        {
-          "name": "Figma",
-          "value": 95,
-          "icon": "figma.svg"
-        },
-        {
-          "name": "Adobe Xd",
-          "value": 95,
-          "icon": "xd.svg"
-        },
-        {
-          "name": "Photoshop",
-          "value": 75,
-          "icon": "photoshop.svg"
-        },
-        {
-          "name": "Illustrator",
-          "value": 80,
-          "icon": "illustrator.svg"
-        }
-      ],
-      "systems": [
-        {
-          "name": "Windows",
-          "value": 80,
-          "icon": "windows.svg"
-        },
-        {
-          "name": "Linux",
-          "value": 30,
-          "icon": "linux.svg"
-        }
-      ]
-    }
+  "resumeSizes": {
+    "full": "5.2 MB",
+    "eco": "1.7 MB"
+  },
+  "contactIcons": {
+    "email": "email.svg",
+    "phone": "phone.svg",
+    "github": "github.svg",
+    "linkedin": "linkedin.svg"
+  },
+  "stack": {
+    "programming": [
+      {
+        "name": "Java",
+        "value": 90,
+        "icon": "java.svg"
+      },
+      {
+        "name": "Kotlin",
+        "value": 80,
+        "icon": "kotlin.svg"
+      },
+      {
+        "name": "Dart",
+        "value": 90,
+        "icon": "dart.svg"
+      },
+      {
+        "name": "C, C++",
+        "value": 80,
+        "icon": "c++.svg"
+      },
+      {
+        "name": "Python",
+        "value": 50,
+        "icon": "python.svg"
+      }
+    ],
+    "tools": [
+      {
+        "name": "Git",
+        "value": 95,
+        "icon": "git.svg"
+      },
+      {
+        "name": "Figma",
+        "value": 95,
+        "icon": "figma.svg"
+      },
+      {
+        "name": "Adobe Xd",
+        "value": 95,
+        "icon": "xd.svg"
+      },
+      {
+        "name": "Photoshop",
+        "value": 75,
+        "icon": "photoshop.svg"
+      },
+      {
+        "name": "Illustrator",
+        "value": 80,
+        "icon": "illustrator.svg"
+      }
+    ],
+    "systems": [
+      {
+        "name": "Windows",
+        "value": 80,
+        "icon": "windows.svg"
+      },
+      {
+        "name": "Linux",
+        "value": 30,
+        "icon": "linux.svg"
+      }
+    ]
+  },
+  "projectGalleries": {
+    "unimun": [
+      "unimunPhoto.webp",
+      "unimunMobile.webp",
+      "unimunDesktop.webp"
+    ],
+    "technoSaf": [
+      "technoSafPhoto.webp",
+      "technoSafMobile.webp",
+      "technoSafPanel.webp"
+    ],
+    "lumos": [
+      "lumosPhoto.webp",
+      "lumosMobile.webp",
+      "lumosDashboard.webp"
+    ],
+    "coloringApp": [
+      "coloringAppPhoto.webp",
+      "coloringAppSettings.webp",
+      "coloringAppMonitor.webp"
+    ],
+    "greenhouse": [
+      "greenhousePhoto.webp",
+      "greenhouseOverview.webp",
+      "greenhouseDetails.webp"
+    ]
   }
 }
